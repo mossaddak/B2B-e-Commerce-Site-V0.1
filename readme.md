@@ -63,6 +63,26 @@ required fields:
 Note: Here have to pass "username" field for patching
 
 
+# Account Recovery
+
+<b>Send OTP to the mail:
+
+post => http://127.0.0.1:8000/api/recovery-account/reset-password/
+
+required fields:
+
+    {
+        "email":"demo@gmail.com"
+    }
+
+<b>Set New Password:</b>
+
+required fields:
+
+    {
+        "password_reset_token":"56411416043889561",
+        "new_password":1234
+    }
 
 
 # How to create app password?

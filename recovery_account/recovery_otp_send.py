@@ -10,7 +10,7 @@ from django.utils.html import strip_tags
 
 def send_otp_via_email(email):
     
-    password_reset_token = random.randint(1,999999)
+    password_reset_token = random.randint(111111,999999)
     mydict = {
         'otp':f"{password_reset_token}"
     }
