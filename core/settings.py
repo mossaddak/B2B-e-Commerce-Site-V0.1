@@ -185,19 +185,14 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'user_account.User'
 
-
-
-
 #email settings=========================================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'#oke
 EMAIL_HOST = 'smtp.gmail.com'#oke
-
 EMAIL_PORT = '587'#oke
-EMAIL_HOST_USER = 'lawyertrive@gmail.com'#leave here your genuine email
-#EMAIL_HOST_PASSWORD = 'zqrgvttkmlpxuqjy' 'zqrgvttkmlpxuqjy' #leave here your genuine password of your email. keep it in mind, as the password should in encrypted condition 
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True#oke
-#oke
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True#oke 
+
 
 
 TIME_ZONE = 'Asia/Dhaka'
