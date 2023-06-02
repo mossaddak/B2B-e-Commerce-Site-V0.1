@@ -93,3 +93,19 @@ required fields:
 
         security > 2 step verification > sing into your account > App passwords(it will get in bottom) > select app(other) > give a name > click generate
 
+
+# Shop
+
+<b>Category:</b>
+
+    post, get => http://127.0.0.1:8000/api/shop/shop-category/
+
+    details, put => http://127.0.0.1:8000/api/shop/shop-category/<_id>/
+
+reqyured field:
+
+    {
+        "title":"Electronics"
+    }
+
+
