@@ -29,7 +29,7 @@ class ShopCategoryView(APIView):
                     {
                         "data":serializer.data,
                         "message":"Category Created"
-                    }
+                    }, status=status.HTTP_201_CREATED
                     
                 )
             
@@ -40,6 +40,6 @@ class ShopCategoryView(APIView):
             {
                 "data":{},
                 "message":"You don't have permissions for this action"
-            }
+            },status=status.HTTP_400_BAD_REQUEST
             
         )
