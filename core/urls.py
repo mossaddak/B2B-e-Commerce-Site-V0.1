@@ -29,5 +29,8 @@ urlpatterns = [
     #recovery account
     path('api/recovery-account/', include("recovery_account.urls")),
 
+    #shop
+    path('api/shop/', include("shop.urls")),
+
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

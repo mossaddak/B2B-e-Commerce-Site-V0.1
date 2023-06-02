@@ -46,8 +46,12 @@ INSTALLED_APPS = [
     'corsheaders', #new
     'rest_framework', #new
 
+    #user account
     'user_account', #custom
     'recovery_account', #custom
+
+    #shop
+    'shop', #custom
 ]
 
 MIDDLEWARE = [
