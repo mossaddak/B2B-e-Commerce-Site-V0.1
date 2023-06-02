@@ -64,14 +64,97 @@ class ShopCategoryView(APIView):
     
 
 class ShopCategoryDetails(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def getCategory(self, _id):
+        category = ShopCategory.objects.get(_id=_id)
+        return category
+
 
     def get(self,request, _id):
-        data = ShopCategory.objects.get(_id=_id)
-        serializer = ShopCategorySerializer(data)
+        if request.user.is_superuser:
+
+            try:
+                data = self.getCategory(_id)
+                serializer = ShopCategorySerializer(data)
+                return Response(
+                    {
+                        "data":serializer.data,
+                        "message":"Data Fetch"
+                    },status=status.HTTP_202_ACCEPTED
+                )
+            
+            except Exception as e:
+                return Response(
+                    {
+                        "data":{},
+                        "message":"Something wrong"
+                    },status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            return Response(
+                {
+                    "data":{},
+                    "message":"You don't have permissions for this action"
+                },status=status.HTTP_400_BAD_REQUEST
+            )
         
-        return Response(
-            {
-                "data":serializer.data,
-                "message":"Data Fetch"
-            },status=status.HTTP_202_ACCEPTED
-        )
+    def put(self, request, _id):
+        if request.user.is_superuser:
+
+            try:
+                category = self.getCategory(_id)
+                data = request.data
+                serializer = ShopCategorySerializer(category, data=data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(
+                        {
+                            "data": serializer.data,
+                            "message": "Category Updated"
+                        },
+                        status=status.HTTP_202_ACCEPTED
+                    )
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+            except Exception as e:
+                return Response(
+                    {
+                        "data":{},
+                        "message":"Something wrong"
+                    },status=status.HTTP_400_BAD_REQUEST
+                )
+
+        else:
+            return Response(
+                {
+                    "data": {},
+                    "message": "You don't have permissions for this action"
+                },
+                status=status.HTTP_202_ACCEPTED
+            )
+        
+    
+    def delete(self, request, _id):
+        if request.user.is_superuser:
+            self.getCategory(_id).delete()
+
+            return Response(
+                {
+                    "data": {},
+                    "message": "Category successfully deleted"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        else:
+            return Response(
+                {
+                    "data": {},
+                    "message": "You don't have permissions for this action"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
