@@ -216,7 +216,6 @@ class ShopDetailsView(APIView):
     def get(self,request, slug):
 
         try:
-            print("shop1=======================================>", self.getShop(slug).merchant)
             shop = self.getShop(slug)
             merchant = shop.merchant
             user = request.user
@@ -246,6 +245,47 @@ class ShopDetailsView(APIView):
                     "message":"Something wrong"
                 },status=status.HTTP_400_BAD_REQUEST
             )
+        
+    
+    def put(self, request, slug):
+        try:
+            shop = self.getShop(slug)
+            merchant = shop.merchant
+            user = request.user
+
+            if merchant == user:
+                data = request.data
+                serializer = ShopSerializer(shop, data=data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(
+                        {
+                            "data": serializer.data,
+                            "message": "Category Updated"
+                        },
+                        status=status.HTTP_202_ACCEPTED
+                    )
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+
+                return Response(
+                    {
+                        "data":{},
+                        "message":"No Shop Found"
+                    },status=status.HTTP_403_FORBIDDEN
+                )
+
+            
+        except Exception as e:
+            return Response(
+                {
+                    "data":{},
+                    "message":"Something wrong"
+                },status=status.HTTP_400_BAD_REQUEST
+            )
+
+        
 
 
 #end========!
