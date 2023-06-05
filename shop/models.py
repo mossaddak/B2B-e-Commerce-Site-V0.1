@@ -17,15 +17,6 @@ class ShopCategory(models.Model):
     def __str__(self):
         return f"{self.pk}.{self.title}"
 
-# @receiver(pre_save, sender=ShopCategory)
-# def update_slug(sender, instance, **kwargs):
-#     if instance.title:
-#         instance.slug = slugify(instance.title)
-
-# # Register the pre_save signal
-# pre_save.connect(update_slug, sender=ShopCategory)
-    
-
 class Shop(models.Model):
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     merchant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shops", null=True, blank=False)
@@ -34,7 +25,6 @@ class Shop(models.Model):
     category = models.ForeignKey(ShopCategory, on_delete=models.CASCADE, related_name="category", null=True, blank=False)
     is_active = models.BooleanField(default=False, null=True, blank=True)
     connection = models.ManyToManyField("self", symmetrical=False, null=True, blank=True)
-
 
     def __str__(self):
         return f"{self.pk}.{self.title}"

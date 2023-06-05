@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import(
     ShopCategory,
     Shop,
-    Connection
+    Connection,
 )
 
 # from user_account.serializer import(
@@ -29,7 +29,6 @@ class ConnectionSerializer(ModelSerializer):
 
 class ShopSerializer(ModelSerializer):
     connection = ConnectionSerializer(many=True, read_only=True)
-    #merchant = UserSerializer(read_only=True)
     category = ShopCategorySerializer(read_only=True)
     
     class Meta:
@@ -47,3 +46,5 @@ class ShopSerializer(ModelSerializer):
             "connection"
         )
 
+class ActivateShopSerializer(serializers.Serializer):
+    _id = serializers.CharField()

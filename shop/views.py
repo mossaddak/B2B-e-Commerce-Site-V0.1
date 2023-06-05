@@ -312,5 +312,33 @@ class ShopDetailsView(APIView):
             )
 #end========!
 
+# activate shop ======================================================
+class ActivateShopView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        try:
+            _id = request.data["_id"]
+            user = request.user
+
+            # Deactivate all other shops for the user
+            Shop.objects.filter(merchant=user).update(is_active=False)
+            shop = Shop.objects.get(_id=_id, merchant = user)
+            print("shop====================================>", shop)
+            shop.is_active = True
+            shop.save()
+            return Response({"message": "Shop activated successfully."}, status=status.HTTP_200_OK)      
+
+        except Exception as e:
+            print("Error====================", e)
+            return Response(
+                {
+                    "errors": {str(e)},
+                    "message": "Invalid data"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+#end========!
 
 

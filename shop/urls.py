@@ -5,6 +5,7 @@ from .views import(
     ShopCategoryDetails,
     ShopView,
     ShopDetailsView,
+    ActivateShopView
 )
 
 
@@ -17,4 +18,5 @@ urlpatterns = [
     #shop
     path('shop/', ShopView.as_view()),
     path('shop/<str:slug>/', ShopDetailsView.as_view()),
+    path('activate/', ActivateShopView.as_view()),
 ]
