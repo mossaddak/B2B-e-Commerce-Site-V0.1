@@ -24,7 +24,7 @@ class ShopCategory(models.Model):
 
 class Shop(models.Model):
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    merchant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="merchant", null=True, blank=False)
+    merchant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shops", null=True, blank=False)
     title = models.CharField(max_length=250, null=True, blank=True)
     slug = models.SlugField(max_length=250, unique=True, null=True, blank=True)
     category = models.ForeignKey(ShopCategory, on_delete=models.CASCADE, related_name="category", null=True, blank=False)

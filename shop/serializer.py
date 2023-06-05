@@ -6,9 +6,9 @@ from .models import(
     Connection
 )
 
-from user_account.serializer import(
-    UserSerializer
-)
+# from user_account.serializer import(
+#     UserSerializer
+# )
 from rest_framework import serializers
 
 
@@ -29,7 +29,7 @@ class ConnectionSerializer(ModelSerializer):
 
 class ShopSerializer(ModelSerializer):
     connection = ConnectionSerializer(many=True, read_only=True)
-    merchant = UserSerializer(read_only=True)
+    #merchant = UserSerializer(read_only=True)
     category = ShopCategorySerializer(read_only=True)
     
     class Meta:

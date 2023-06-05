@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
+from shop.serializer import(
+    ShopSerializer
+)
 
 
 
@@ -47,11 +50,12 @@ class ProfilePictureSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     profile_picture = ProfilePictureSerializer(many=True, read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
+    shops = ShopSerializer(many=True, read_only=True)
     class Meta:
         model = User
         is_superuser = serializers.BooleanField(read_only=True)
         is_subscribed = serializers.BooleanField(read_only=True)
-        is_verified = serializers.BooleanField(read_only=True)
+        is_verified = serializers.BooleanField(read_only=True) 
         fields = [
             'id',
             "username",
@@ -63,6 +67,7 @@ class UserSerializer(ModelSerializer):
             "is_superuser",
             "is_subscribed",
             "is_verified",
+            "shops"
         ]
 
         extra_kwargs = {
