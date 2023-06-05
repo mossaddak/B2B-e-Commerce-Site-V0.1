@@ -96,7 +96,7 @@ required fields:
 
 # Shop
 
-<h3>Category:</h3>
+<h3>Category Create, Update, Delete, Details:</h3>
 
     post, get => http://127.0.0.1:8000/api/shop/shop-category/
 
@@ -106,6 +106,20 @@ reqyured field:
 
     {
         "title":"Electronics"
+    }
+
+
+<h3>Shop Create, Update, Delete, Details:</h3>
+
+    post, get => http://127.0.0.1:8000/api/shop/create-shop/
+
+    details, put => http://127.0.0.1:8000/api/shop/shop-category/<slug>/
+
+reqyured field:
+
+    {
+        "title": "shop1",
+        "category_title": "Electronics"
     }
 
 

@@ -34,6 +34,7 @@ class ShopSerializer(ModelSerializer):
     
     class Meta:
         category_title = serializers.CharField()
+        is_active = serializers.BooleanField(read_only=True)
         model = Shop
         fields = (
             "_id",
@@ -43,7 +44,5 @@ class ShopSerializer(ModelSerializer):
             "category",
             "is_active",
             "connection"
-
-
         )
 

@@ -15,7 +15,7 @@ from .models import(
 )
 
 
-# Create your views here.
+# shop category======================================================
 class ShopCategoryView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -79,7 +79,6 @@ class ShopCategoryView(APIView):
             },status=status.HTTP_400_BAD_REQUEST
         )
     
-
 class ShopCategoryDetails(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -173,12 +172,13 @@ class ShopCategoryDetails(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+#end========!
 
+# shop ======================================================
 class ShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     def post(self, request):
-
         try:
             serializer = ShopSerializer(data=request.data)
             if serializer.is_valid():
@@ -209,3 +209,24 @@ class ShopView(APIView):
                     },
                     status=status.HTTP_400_BAD_REQUEST
                 )
+    
+    def get(self, request):
+        data = Shop.objects.filter(merchant=request.user)
+        if request.user.is_superuser:
+            serializer = ShopSerializer(data, many=True)
+
+            return Response(
+                {
+                    "data":serializer.data,
+                    "message":"Data Fetch"
+                }, status=status.HTTP_202_ACCEPTED
+            )
+    
+        return Response(
+            {
+                "data":{},
+                "message":"You don't have permissions for this action"
+            },status=status.HTTP_400_BAD_REQUEST
+        )
+
+#end========!
