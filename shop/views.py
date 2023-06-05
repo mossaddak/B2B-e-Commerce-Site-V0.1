@@ -45,7 +45,7 @@ class ShopCategoryView(APIView):
                 print("Error====================", e)
                 return Response(
                         {
-                            "errors": "Category Sould be unique",
+                            "errors": {str(e)},
                             "message": "Invalid data"
                         },
                         status=status.HTTP_400_BAD_REQUEST
@@ -138,9 +138,9 @@ class ShopCategoryDetails(APIView):
             )
         
     
-    def delete(self, request, _id):
+    def delete(self, request, slug):
         if request.user.is_superuser:
-            self.getCategory(_id).delete()
+            self.getCategory(slug).delete()
 
             return Response(
                 {
@@ -190,7 +190,7 @@ class ShopView(APIView):
             print("Error====================", e)
             return Response(
                     {
-                        "errors": "Shop Name Sould be unique",
+                        "errors": {str(e)},
                         "message": "Invalid data"
                     },
                     status=status.HTTP_400_BAD_REQUEST
@@ -234,7 +234,7 @@ class ShopDetailsView(APIView):
                     {
                         "data":{},
                         "message":"No data found"
-                    },status=status.HTTP_403_FORBIDDEN
+                    },status=status.HTTP_204_NO_CONTENT
                 )
                 
         
@@ -273,7 +273,7 @@ class ShopDetailsView(APIView):
                     {
                         "data":{},
                         "message":"No Shop Found"
-                    },status=status.HTTP_403_FORBIDDEN
+                    },status=status.HTTP_204_NO_CONTENT
                 )
 
             
@@ -283,6 +283,33 @@ class ShopDetailsView(APIView):
                     "data":{},
                     "message":"Something wrong"
                 },status=status.HTTP_400_BAD_REQUEST
+            )
+        
+    
+    def delete(self, request, slug):
+        
+        shop = self.getShop(slug)
+        merchant = shop.merchant
+        user = request.user
+
+        if merchant == user:
+            shop.delete()
+
+            return Response(
+                {
+                    "data": {},
+                    "message": "Shop successfully deleted"
+                },
+                status=status.HTTP_202_ACCEPTED
+            )
+        
+        else:
+            return Response(
+                {
+                    "data": {},
+                    "message": "No Data Found"
+                },
+                status=status.HTTP_204_NO_CONTENT
             )
 
         
