@@ -4,7 +4,6 @@ from user_account.models import(
     User
 )
 from django.utils.text import slugify
-from django.core.exceptions import ValidationError
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -15,14 +14,16 @@ class ShopCategory(models.Model):
     title = models.CharField(max_length=250,unique=True, null=True, blank=True)
     slug = models.SlugField(max_length=250, unique=True, null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-    
     def __str__(self):
         return f"{self.pk}.{self.title}"
-    
+
+# @receiver(pre_save, sender=ShopCategory)
+# def update_slug(sender, instance, **kwargs):
+#     if instance.title:
+#         instance.slug = slugify(instance.title)
+
+# # Register the pre_save signal
+# pre_save.connect(update_slug, sender=ShopCategory)
     
 
 class Shop(models.Model):
@@ -34,35 +35,11 @@ class Shop(models.Model):
     is_active = models.BooleanField(default=False, null=True, blank=True)
     connection = models.ManyToManyField("self", symmetrical=False, null=True, blank=True)
 
-    # def save(self, *args, **kwargs):
-    #     if not self.slug:
-    #         self.slug = slugify(self.title)
-    #     super().save(*args, **kwargs)
-
-
-
-
-    # def save(self, *args, **kwargs):
-    #     if not self.slug or self.title != self.slugify(self.title):
-    #         self.slug = self.slugify(self.title)
-    #     super().save(*args, **kwargs)
-    
-    # def slugify(self, value):
-    #     return slugify(value)
 
     def __str__(self):
         return f"{self.pk}.{self.title}"
     
 
-@receiver(pre_save, sender=Shop)
-def update_slug(sender, instance, **kwargs):
-    if instance.title:
-        instance.slug = slugify(instance.title)
-
-
-# Register the pre_save signal
-pre_save.connect(update_slug, sender=Shop)
-    
 
 class Connection(models.Model):
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -71,6 +48,18 @@ class Connection(models.Model):
 
     def __str__(self):
         return f"{self.pk}.Sender:{self.sender},Reciver:{self.reciver}"
+    
+
+
+@receiver(pre_save, sender=Shop)
+@receiver(pre_save, sender=ShopCategory)
+def update_slug(sender, instance, **kwargs):
+    if instance.title:
+        instance.slug = slugify(instance.title)
+
+# Register the pre_save signal
+pre_save.connect(update_slug, sender=Shop)
+pre_save.connect(update_slug, sender=ShopCategory)
 
 
 

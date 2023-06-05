@@ -70,8 +70,7 @@ class ShopCategoryView(APIView):
                 "message":"Data Fetch"
             }, status=status.HTTP_202_ACCEPTED
         )
-    
-    
+
 class ShopCategoryDetails(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -311,10 +310,6 @@ class ShopDetailsView(APIView):
                 },
                 status=status.HTTP_204_NO_CONTENT
             )
-
-        
-
-
 #end========!
 
 
