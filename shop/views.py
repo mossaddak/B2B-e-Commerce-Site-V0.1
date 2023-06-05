@@ -61,23 +61,16 @@ class ShopCategoryView(APIView):
 
     
     def get(self, request):
-        if request.user.is_superuser:
-            data = ShopCategory.objects.all()
-            serializer = ShopCategorySerializer(data, many=True)
+        data = ShopCategory.objects.all()
+        serializer = ShopCategorySerializer(data, many=True)
 
-            return Response(
-                {
-                    "data":serializer.data,
-                    "message":"Data Fetch"
-                }, status=status.HTTP_202_ACCEPTED
-            )
-    
         return Response(
             {
-                "data":{},
-                "message":"You don't have permissions for this action"
-            },status=status.HTTP_400_BAD_REQUEST
+                "data":serializer.data,
+                "message":"Data Fetch"
+            }, status=status.HTTP_202_ACCEPTED
         )
+    
     
 class ShopCategoryDetails(APIView):
     permission_classes = [IsAuthenticated]
@@ -89,32 +82,25 @@ class ShopCategoryDetails(APIView):
 
 
     def get(self,request, slug):
-        if request.user.is_superuser:
 
-            try:
-                data = self.getCategory(slug)
-                serializer = ShopCategorySerializer(data)
-                return Response(
-                    {
-                        "data":serializer.data,
-                        "message":"Data Fetch"
-                    },status=status.HTTP_202_ACCEPTED
-                )
-            
-            except Exception as e:
-                return Response(
-                    {
-                        "data":{},
-                        "message":"Something wrong"
-                    },status=status.HTTP_400_BAD_REQUEST
-                )
-        else:
+        try:
+            data = self.getCategory(slug)
+            serializer = ShopCategorySerializer(data)
+            return Response(
+                {
+                    "data":serializer.data,
+                    "message":"Data Fetch"
+                },status=status.HTTP_202_ACCEPTED
+            )
+        
+        except Exception as e:
             return Response(
                 {
                     "data":{},
-                    "message":"You don't have permissions for this action"
+                    "message":"Something wrong"
                 },status=status.HTTP_400_BAD_REQUEST
             )
+        
         
     def put(self, request, slug):
         if request.user.is_superuser:
