@@ -39,6 +39,7 @@ class ShopSerializer(ModelSerializer):
         fields = (
             "_id",
             "title",
+            "slug",
             "merchant",
             "title",
             "category",

@@ -207,4 +207,48 @@ class ShopView(APIView):
                 "message":"Data Fetch"
             }, status=status.HTTP_202_ACCEPTED
         )
+
+class ShopDetailsView(APIView):
+    def getShop(self, slug):
+        shop = Shop.objects.get(slug=slug)
+        return shop
+        
+    def get(self,request, slug):
+
+        try:
+            print("shop1=======================================>", self.getShop(slug).merchant)
+            shop = self.getShop(slug)
+            merchant = shop.merchant
+            user = request.user
+
+            if user==merchant:
+                data = self.getShop(slug)
+                serializer = ShopSerializer(data)
+                return Response(
+                    {
+                        "data":serializer.data,
+                        "message":"Data Fetch"
+                    },status=status.HTTP_202_ACCEPTED
+                )
+            else:
+                return Response(
+                    {
+                        "data":{},
+                        "message":"No data found"
+                    },status=status.HTTP_403_FORBIDDEN
+                )
+                
+        
+        except Exception as e:
+            return Response(
+                {
+                    "data":{},
+                    "message":"Something wrong"
+                },status=status.HTTP_400_BAD_REQUEST
+            )
+
+
 #end========!
+
+
+

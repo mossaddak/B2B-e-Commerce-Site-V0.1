@@ -3,13 +3,18 @@ from django.urls import path, include
 from .views import(
     ShopCategoryView,
     ShopCategoryDetails,
-    ShopView
+    ShopView,
+    ShopDetailsView,
 )
 
 
 
 urlpatterns = [
+    #category
     path('shop-category/', ShopCategoryView.as_view()),
     path('shop-category/<str:slug>/', ShopCategoryDetails.as_view()),
-    path('create-shop/', ShopView.as_view()),
+
+    #shop
+    path('shop/', ShopView.as_view()),
+    path('shop/<str:slug>/', ShopDetailsView.as_view()),
 ]
