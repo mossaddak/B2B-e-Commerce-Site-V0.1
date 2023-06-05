@@ -1,62 +1,97 @@
-B2B Ecommerce Website Model design 
+# Marchent
 
- 
-# User : 
+    marchent:{
+        name:"Marchent Name",
 
-    Username 
+        shops:{
 
-    Email 
+            {
+                "_id":345345343,
+                "title":"Shop Name",
 
-    Password 
+                "category":{
+                    "_id":3434343,
+                    "title":"Category Name"
+                },
 
-    Type : default=merchant 
+                "connection":{
+                    1,
+                    2,
+                    3
+                },
 
-    Tc 
+                "cart":{
+                    "products":{
+                        "_id":34334534,
+                        "name":"demo name",
+                    }
+                }
+            },
+            {
+                "_id":345345343,
+                "title":"Shop Name",
 
-# Category: 
+                "category":{
+                    "_id":3434343,
+                    "title":"Category Name"
+                },
 
-    Category_name 
+                "connection":{
+                    1,
+                    2,
+                    3
+                }
+            },
 
-    Description 
+        }
+    }
 
-# Shop : 
+# Category
 
-    Merchant = Foreignkey(User) 
+    "category":{
+        "_id":3434343,
+        "title":"Category Name"
+    }
 
-    Name 
+# Cart
 
-    Category =Foreignkey(category) 
+    "cart":{
+        "shop":{
+            "_id":3434343,
+            "name":"demo name"
+        },
+        "products":{
+            "_id":34334534,
+            "name":"demo name",
+        }
+    }
 
-    Activate_code  
+# Shop
 
-    Is_Active  
+    {
+        "_id":345345343,
+        "title":"Shop Name",
 
-# Product : 
+        "category":{
+            "_id":3434343,
+            "title":"Category Name"
+        },
 
-    Shop = foreignkey 
+        "request_sender" = {
+            "sender1":"mossaddak",
+            "sender2":"kabir"
+        },
 
-    Product name  
+        "connection":{
+            1,
+            2,
+            3
+        },
 
-    Description 
-
-    price 
-
-# Cart: 
-
-    Shop = onetoone field(shop) 
-
-    Cartitem: 
-
-    Cart = foreignkey(cart) 
-
-    Product =foreignkey(product) 
-
-    Quantity 
-
-# Connection: 
-
-    Source_shop = foreignkey(shop) 
-
-    Target_shop = foreignkey(shop) 
-
-    Status = dropdown 
+        "cart":{
+            "products":{
+                "_id":34334534,
+                "name":"demo name",
+            }
+        }
+    }
