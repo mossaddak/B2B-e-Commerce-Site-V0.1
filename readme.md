@@ -96,7 +96,7 @@ required fields:
 
 # Shop
 
-<b>Category:</b>
+<h1>Category:</h1>
 
     post, get => http://127.0.0.1:8000/api/shop/shop-category/
 

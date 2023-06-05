@@ -119,7 +119,6 @@ class ShopCategoryDetails(APIView):
         
     def put(self, request, slug):
         if request.user.is_superuser:
-
             try:
                 category = self.getCategory(slug)
                 data = request.data
