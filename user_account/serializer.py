@@ -13,6 +13,7 @@ from rest_framework import status
 
 
 
+
 def auto_user(set_email):
     provider = set_email.split("@")[1]
     usernames = {

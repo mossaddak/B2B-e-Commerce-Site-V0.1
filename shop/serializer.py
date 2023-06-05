@@ -2,9 +2,15 @@ from rest_framework.serializers import ModelSerializer
 
 from .models import(
     ShopCategory,
-    Shop
-
+    Shop,
+    Connection
 )
+
+from user_account.serializer import(
+    UserSerializer
+)
+from rest_framework import serializers
+
 
 class ShopCategorySerializer(ModelSerializer):
 
@@ -13,10 +19,31 @@ class ShopCategorySerializer(ModelSerializer):
         fields = (
             "_id",
             "title",
+            "slug"
         )
 
-class ShopSerializer(ModelSerializer):
+class ConnectionSerializer(ModelSerializer):
     class Meta:
-        model = Shop
+        model = Connection
         fields = "__all__"
+
+class ShopSerializer(ModelSerializer):
+    connection = ConnectionSerializer(many=True, read_only=True)
+    #merchant = UserSerializer(read_only=True)
+
+    
+    class Meta:
+        category_title = serializers.CharField()
+        model = Shop
+        fields = (
+            "_id",
+            "title",
+            "merchant",
+            "title",
+            "category",
+            "is_active",
+            "connection"
+
+
+        )
 

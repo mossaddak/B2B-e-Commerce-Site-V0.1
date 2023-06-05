@@ -181,23 +181,20 @@ class ShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     def post(self, request):
-        category_title=request.data['category']
-        category = ShopCategory.objects.get(title=category_title)
-
-        print("Category==============================", category)
-
-        print("Title==================================>", request.data['title'])
-        shop = Shop.objects.create(
-            merchant = request.user,
-            title = request.data['title'],
-            category = category,
-        )
         serializer = ShopSerializer(data=request.data)
         if serializer.is_valid():
-            
+            category_title = request.data['category_title']
+            category = ShopCategory.objects.get(title=category_title)
+            shop = Shop.objects.create(
+                merchant = request.user,
+                title = request.data['title'],
+                category = category,
+            )
+            last_shop = Shop.objects.last()
+            shop_serializer = ShopSerializer(last_shop)
             return Response(
                 {
-                    "data":serializer.data,
+                    "data":shop_serializer.data,
                     "message":"Shop Successfully Created"
                 }, status=status.HTTP_201_CREATED
             )

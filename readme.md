@@ -100,7 +100,7 @@ required fields:
 
     post, get => http://127.0.0.1:8000/api/shop/shop-category/
 
-    details, put => http://127.0.0.1:8000/api/shop/shop-category/<_id>/
+    details, put => http://127.0.0.1:8000/api/shop/shop-category/<slug>/
 
 reqyured field:
 
