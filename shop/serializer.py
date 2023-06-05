@@ -29,8 +29,8 @@ class ConnectionSerializer(ModelSerializer):
 
 class ShopSerializer(ModelSerializer):
     connection = ConnectionSerializer(many=True, read_only=True)
-    #merchant = UserSerializer(read_only=True)
-
+    merchant = UserSerializer(read_only=True)
+    category = ShopCategorySerializer(read_only=True)
     
     class Meta:
         category_title = serializers.CharField()
