@@ -115,11 +115,15 @@ reqyured field:
 
     details, put => http://127.0.0.1:8000/api/shop/shop/<slug>/
 
-reqyured field:
+required field:
 
     {
         "title": "shop1",
         "category_title": "Electronics"
     }
+
+<h3>Shop activation</h3>
+
+    post => http://127.0.0.1:8000/api/shop/activate/
 
 
