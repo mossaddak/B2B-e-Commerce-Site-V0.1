@@ -384,10 +384,14 @@ class ShopConnectView(APIView):
                 reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
                 connection = Connection.objects.filter(sender=sender, reciver=reciver)
                 if not connection:
-                    connection = Connection.objects.create(
-                        sender = sender,
-                        reciver = reciver
-                    )
+
+                    if sender.category == reciver.category:
+                        connection = Connection.objects.create(
+                            sender = sender,
+                            reciver = reciver
+                        )
+                    else:
+                        return Response({"message": "Category doesn't match."}, status=status.HTTP_403_FORBIDDEN)
                 else:
                     if connection.first().status == "accepted":
                         return Response({"message": "You are already connected."}, status=status.HTTP_200_OK)

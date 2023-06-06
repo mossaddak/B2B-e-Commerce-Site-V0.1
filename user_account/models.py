@@ -8,8 +8,6 @@ class User(AbstractUser):
     ACCOUNT_TYPE_CHOICES = [
         ('merchant', 'Merchant')
     ]
-
-
     email = models.EmailField(max_length=50, unique=True, error_messages={"unique":"A user with that email already exists."})
     is_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=20, null=True, blank=True)
