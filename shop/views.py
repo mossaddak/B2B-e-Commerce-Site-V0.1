@@ -4,14 +4,18 @@ from rest_framework import status
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 from .serializer import (
     ShopCategorySerializer,
-    ShopSerializer
+    ShopSerializer,
+    BaseShopSerializer
 )
 from .models import(
     ShopCategory,
-    Shop
+    Shop,
+    Connection
 )
 
 
@@ -157,9 +161,9 @@ class ShopCategoryDetails(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-#end========!
 
-# shop ======================================================
+
+# shop create ======================================================
 class ShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -207,6 +211,7 @@ class ShopView(APIView):
             }, status=status.HTTP_202_ACCEPTED
         )
 
+#shop details ======================================================
 class ShopDetailsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -313,7 +318,7 @@ class ShopDetailsView(APIView):
                 },
                 status=status.HTTP_204_NO_CONTENT
             )
-#end========!
+
 
 # activate shop ======================================================
 class ActivateShopView(APIView):
@@ -348,6 +353,7 @@ class ActivateShopView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+#all shop ==================================================
 class AllShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -364,8 +370,49 @@ class AllShopView(APIView):
             }, status=status.HTTP_200_OK
         )      
  
-        
-#end========!
+#shop connection
+class ShopConnectView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        try:
+            _id = request.data["_id"]
+            user = request.user
+            try:
+                sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
+                reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+                print("Active shop=========================================>", reciver)
+
+                connection = Connection.objects.create(
+                    sender = sender,
+                    reciver = reciver
+                )
+
+
+            except ObjectDoesNotExist:
+                pass
+
+            print("target_shop ========================================>", sender)
+            return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)      
+
+
+            # if shop.is_active == False:
+            #     pass
+            #     return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)      
+            # else:
+            #     return Response({"message": "The shop already activate."}, status=status.HTTP_403_FORBIDDEN)      
+
+
+        except Exception as e:
+            print("Error====================", e)
+            return Response(
+                {
+                    "errors": {str(e)},
+                    "message": "Invalid data"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 

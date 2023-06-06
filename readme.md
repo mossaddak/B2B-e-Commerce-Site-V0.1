@@ -139,6 +139,6 @@ requirde fields:
 
 <h3>Get all shop</h3>
 
-    get => http://127.0.0.1:8000/api/shop/all-shop/
+    get => http://127.0.0.1:8000/api/shop/all/
 
 

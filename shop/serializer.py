@@ -46,5 +46,6 @@ class ShopSerializer(ModelSerializer):
             "connection"
         )
 
-class ActivateShopSerializer(serializers.Serializer):
+class BaseShopSerializer(serializers.Serializer):
     _id = serializers.CharField()
+

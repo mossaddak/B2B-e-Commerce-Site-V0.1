@@ -32,9 +32,16 @@ class Shop(models.Model):
 
 
 class Connection(models.Model):
+    CONEECTION_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+    ]
+
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     sender = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
     reciver = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True, related_name="reciver")
+    status = models.CharField(max_length=50, choices=CONEECTION_STATUS_CHOICES, null=True, blank=True, default="pending")
+
 
     def __str__(self):
         return f"{self.pk}.Sender:{self.sender},Reciver:{self.reciver}"
