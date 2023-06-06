@@ -382,27 +382,21 @@ class ShopConnectView(APIView):
             try:
                 sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
                 reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
-                print("Active shop=========================================>", reciver)
-
-                connection = Connection.objects.create(
-                    sender = sender,
-                    reciver = reciver
-                )
-
-
+                connection = Connection.objects.filter(sender=sender, reciver=reciver)
+                if not connection:
+                    connection = Connection.objects.create(
+                        sender = sender,
+                        reciver = reciver
+                    )
+                else:
+                    if connection.first().status == "accepted":
+                        return Response({"message": "You are already connected."}, status=status.HTTP_200_OK)
+                    else:
+                        return Response({"message": "You already sent a connection."}, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
                 pass
 
-            print("target_shop ========================================>", sender)
             return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)      
-
-
-            # if shop.is_active == False:
-            #     pass
-            #     return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)      
-            # else:
-            #     return Response({"message": "The shop already activate."}, status=status.HTTP_403_FORBIDDEN)      
-
 
         except Exception as e:
             print("Error====================", e)
