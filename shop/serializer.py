@@ -5,13 +5,7 @@ from .models import(
     Shop,
     Connection,
 )
-
-# from user_account.serializer import(
-#     UserSerializer
-# )
 from rest_framework import serializers
-
-
 class ShopCategorySerializer(ModelSerializer):
 
     class Meta:

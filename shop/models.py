@@ -35,6 +35,7 @@ class Connection(models.Model):
     CONEECTION_STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
+        ('reject', 'Reject'),
     ]
 
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -46,7 +47,6 @@ class Connection(models.Model):
     def __str__(self):
         return f"{self.pk}.Sender:{self.sender},Reciver:{self.reciver}"
     
-
 
 @receiver(pre_save, sender=Shop)
 @receiver(pre_save, sender=ShopCategory)

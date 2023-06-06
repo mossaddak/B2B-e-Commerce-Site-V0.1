@@ -10,7 +10,8 @@ from django.db.models import Q
 from .serializer import (
     ShopCategorySerializer,
     ShopSerializer,
-    BaseShopSerializer
+    BaseShopSerializer,
+    ConnectionSerializer
 )
 from .models import(
     ShopCategory,
@@ -380,16 +381,17 @@ class ShopConnectView(APIView):
             _id = request.data["_id"]
             user = request.user
             try:
-                sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
-                reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+                reciver = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
+                sender = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
                 connection = Connection.objects.filter(sender=sender, reciver=reciver)
-                if not connection:
 
+                if not connection:
                     if sender.category == reciver.category:
                         connection = Connection.objects.create(
                             sender = sender,
                             reciver = reciver
                         )
+                        return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)
                     else:
                         return Response({"message": "Category doesn't match."}, status=status.HTTP_403_FORBIDDEN)
                 else:
@@ -397,10 +399,10 @@ class ShopConnectView(APIView):
                         return Response({"message": "You are already connected."}, status=status.HTTP_200_OK)
                     else:
                         return Response({"message": "You already sent a connection."}, status=status.HTTP_200_OK)
-            except ObjectDoesNotExist:
-                pass
+            except Exception as e:
+                return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-            return Response({"message": "Connection successfully sent."}, status=status.HTTP_200_OK)      
+            
 
         except Exception as e:
             print("Error====================", e)
@@ -411,7 +413,29 @@ class ShopConnectView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+        
+    
+    # def get(self, request):
+    #     shop = Shop.objects.get(_id="0aa0aaa3-3d58-4d07-ba50-071601c698c5", merchant=request.user)
+        
+    #     print("shops====================================>", shop)
+    #     senders = Connection.objects.filter(sender=shop)
+    #     connections = Connection.objects.all()
+    #     #print("Connections============================>", connections)
+    #     print("Senders=================================>", senders)
+
+    #     return Response(
+    #         {
+    #             #"senders": senders_serializer.data,
+    #             "message": "Data fetched"
+    #         },
+    #         status=status.HTTP_200_OK
+    #     )
 
 
 
+# class AllConnectView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     authentication_classes = [JWTAuthentication] 
 
+    
