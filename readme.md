@@ -142,3 +142,15 @@ requirde fields:
     get => http://127.0.0.1:8000/api/shop/all/
 
 
+
+<h3>Shop to shop connection</h3>
+
+post => http://127.0.0.1:8000/api/shop/connection/
+
+required fields:
+
+    {
+        "_id":"6b76a493-ed10-40a6-9eaf-aa8ad25b2bf3"
+    }
+
+<b>Note: _id = Shop Id you want to sent connection</b>
