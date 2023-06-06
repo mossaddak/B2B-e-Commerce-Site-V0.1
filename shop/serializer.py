@@ -16,18 +16,8 @@ class ShopCategorySerializer(ModelSerializer):
             "slug"
         )
 
-class ConnectionSerializer(ModelSerializer):
-    class Meta:
-        model = Connection
-        fields = (
-            "_id",
-            "sender",
-            "reciver"
-
-        )
-
 class ShopSerializer(ModelSerializer):
-    connection = ConnectionSerializer(many=True, read_only=True)
+    #connection = ConnectionSerializer(many=True, read_only=True)
     category = ShopCategorySerializer(read_only=True)
     
     class Meta:
@@ -44,6 +34,19 @@ class ShopSerializer(ModelSerializer):
             "is_active",
             "connection"
         )
+
+class ConnectionSerializer(ModelSerializer):
+    sender = ShopSerializer()
+    reciver = ShopSerializer()
+    class Meta:
+        model = Connection
+        fields = (
+            "_id",
+            "sender",
+            "reciver"
+        )
+
+
 
 class BaseShopSerializer(serializers.Serializer):
     _id = serializers.CharField()

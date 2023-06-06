@@ -423,8 +423,8 @@ class ShopConnectView(APIView):
         getRequestSerializer = ConnectionSerializer(getRequest, many=True)
         return Response(
             {   
-                "send_request":sendRequestSerializer.data,
-                "get_request":getRequestSerializer.data,
+                "send_request":[item.get("reciver") for item in sendRequestSerializer.data],
+                "get_request":[item.get("sender") for item in getRequestSerializer.data],
 
                 "message": "Data fetched"
             },
