@@ -19,7 +19,12 @@ class ShopCategorySerializer(ModelSerializer):
 class ConnectionSerializer(ModelSerializer):
     class Meta:
         model = Connection
-        fields = "__all__"
+        fields = (
+            "_id",
+            "sender",
+            "reciver"
+
+        )
 
 class ShopSerializer(ModelSerializer):
     connection = ConnectionSerializer(many=True, read_only=True)

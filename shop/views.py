@@ -402,8 +402,6 @@ class ShopConnectView(APIView):
             except Exception as e:
                 return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-            
-
         except Exception as e:
             print("Error====================", e)
             return Response(
@@ -413,24 +411,25 @@ class ShopConnectView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
     
-    # def get(self, request):
-    #     shop = Shop.objects.get(_id="0aa0aaa3-3d58-4d07-ba50-071601c698c5", merchant=request.user)
+    def get(self, request):
+        merchant = request.user 
+        sendRequest = Connection.objects.filter(sender__merchant=merchant)
+        getRequest = Connection.objects.filter(reciver__merchant=merchant)
         
-    #     print("shops====================================>", shop)
-    #     senders = Connection.objects.filter(sender=shop)
-    #     connections = Connection.objects.all()
-    #     #print("Connections============================>", connections)
-    #     print("Senders=================================>", senders)
+        print("sendRequest=================================>", sendRequest)
+        print("getRequest=================================>", getRequest)
+        sendRequestSerializer = ConnectionSerializer(sendRequest, many=True)
+        getRequestSerializer = ConnectionSerializer(getRequest, many=True)
+        return Response(
+            {   
+                "send_request":sendRequestSerializer.data,
+                "get_request":getRequestSerializer.data,
 
-    #     return Response(
-    #         {
-    #             #"senders": senders_serializer.data,
-    #             "message": "Data fetched"
-    #         },
-    #         status=status.HTTP_200_OK
-    #     )
+                "message": "Data fetched"
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 
