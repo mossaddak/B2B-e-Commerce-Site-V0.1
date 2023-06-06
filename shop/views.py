@@ -208,6 +208,9 @@ class ShopView(APIView):
         )
 
 class ShopDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
     def getShop(self, slug):
         shop = Shop.objects.get(slug=slug)
         return shop
@@ -344,6 +347,26 @@ class ActivateShopView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+class AllShopView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+
+        data = Shop.objects.all()
+        serializer = ShopSerializer(data, many=True)
+
+        return Response(
+            {
+                "message": "Data fetch",
+                "data":serializer.data
+            }, status=status.HTTP_200_OK
+        )      
+ 
+        
 #end========!
+
+
 
 

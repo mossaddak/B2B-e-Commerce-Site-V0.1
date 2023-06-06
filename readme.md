@@ -128,4 +128,17 @@ required field:
 
     post => http://127.0.0.1:8000/api/shop/activate/
 
+requirde fields:
+
+    {
+        "_id":"0aa0aaa3-3d58-4d07-ba50-071601c698c5"
+    }
+    
+<b>Note: _id = Shop Id</b>
+
+
+<h3>Get all shop</h3>
+
+    get => http://127.0.0.1:8000/api/shop/all-shop/
+
 

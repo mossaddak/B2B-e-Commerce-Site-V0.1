@@ -5,7 +5,8 @@ from .views import(
     ShopCategoryDetails,
     ShopView,
     ShopDetailsView,
-    ActivateShopView
+    ActivateShopView,
+    AllShopView
 )
 
 
@@ -19,4 +20,5 @@ urlpatterns = [
     path('shop/', ShopView.as_view()),
     path('shop/<str:slug>/', ShopDetailsView.as_view()),
     path('activate/', ActivateShopView.as_view()),
+    path('all-shop/', AllShopView.as_view()),
 ]
