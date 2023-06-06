@@ -321,14 +321,19 @@ class ActivateShopView(APIView):
         try:
             _id = request.data["_id"]
             user = request.user
-
-            # Deactivate all other shops for the user
-            Shop.objects.filter(merchant=user).update(is_active=False)
             shop = Shop.objects.get(_id=_id, merchant = user)
-            print("shop====================================>", shop)
-            shop.is_active = True
-            shop.save()
-            return Response({"message": "Shop activated successfully."}, status=status.HTTP_200_OK)      
+
+            if shop.is_active == False:
+
+                # Deactivate all other shops for the user
+                Shop.objects.filter(merchant=user).update(is_active=False)
+                
+                shop.is_active = True
+                shop.save()
+                return Response({"message": "Shop activated successfully."}, status=status.HTTP_200_OK)      
+            else:
+                return Response({"message": "The shop already activate."}, status=status.HTTP_403_FORBIDDEN)      
+
 
         except Exception as e:
             print("Error====================", e)

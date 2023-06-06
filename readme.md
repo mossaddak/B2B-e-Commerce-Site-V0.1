@@ -124,6 +124,8 @@ required field:
 
 <h3>Shop activation</h3>
 
+<p>Just hit this below URL:</p>
+
     post => http://127.0.0.1:8000/api/shop/activate/
 
 
