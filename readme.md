@@ -145,7 +145,7 @@ requirde fields:
 
 <h3>Shop to shop connection</h3>
 
-post => http://127.0.0.1:8000/api/shop/connection/
+post, get => http://127.0.0.1:8000/api/shop/connection/
 
 required fields:
 
