@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 from products.models import(
     Product
@@ -9,7 +9,7 @@ from products.models import(
 class ShoppingCart(models.Model):
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="carts", blank=False, null=True)
-    quantity = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=False)
+    quantity = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)], null=True, blank=False)
     totalPrice = models.PositiveIntegerField(blank=False, null=True)
 
     def __str__(self):
