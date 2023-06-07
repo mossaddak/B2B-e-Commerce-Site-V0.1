@@ -413,7 +413,7 @@ class ShopConnectView(APIView):
             )
     
     def get(self, request):
-        merchant = request.user 
+        merchant = request.user
         sendRequest = Connection.objects.filter(sender__merchant=merchant)
         getRequest = Connection.objects.filter(reciver__merchant=merchant)
         
@@ -433,8 +433,38 @@ class ShopConnectView(APIView):
 
 
 
-# class AllConnectView(APIView):
-#     permission_classes = [IsAuthenticated]
-#     authentication_classes = [JWTAuthentication] 
+class AcceptConnectView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
+    def post(self, request):
+        try:
+            _id = request.data["_id"]
+            senderShop = Shop.objects.get(_id=_id)
+            user = request.user
+            
+
+            sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
+            reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+            connection = Connection.objects.get(sender=sender, reciver=reciver)
+            connection.status = "accepted"
+            
+            connection.save()
+            sender.connection.add(reciver)
+            reciver.connection.add(sender)
+            print("connShop==============================>", connection)
+            print("status======================================>",connection.status)
+
+            
+
+
+        except Exception as e:
+            print("Error====================", e)
+            return Response(
+                {
+                    "errors": {str(e)},
+                    "message": "Invalid data"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
     
