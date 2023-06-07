@@ -34,8 +34,7 @@ class Shop(models.Model):
 class Connection(models.Model):
     CONEECTION_STATUS_CHOICES = [
         ('pending', 'Pending'),
-        ('accepted', 'Accepted'),
-        ('reject', 'Reject'),
+        ('accepted', 'Accepted')
     ]
 
     _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

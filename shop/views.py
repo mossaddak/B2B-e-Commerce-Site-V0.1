@@ -416,9 +416,6 @@ class ShopConnectView(APIView):
         merchant = request.user
         sendRequest = Connection.objects.filter(sender__merchant=merchant, status="pending")
         getRequest = Connection.objects.filter(reciver__merchant=merchant, status="pending")
-        
-        print("sendRequest=================================>", sendRequest)
-        print("getRequest=================================>", getRequest)
         sendRequestSerializer = ConnectionSerializer(sendRequest, many=True)
         getRequestSerializer = ConnectionSerializer(getRequest, many=True)
         return Response(
@@ -430,8 +427,6 @@ class ShopConnectView(APIView):
             },
             status=status.HTTP_200_OK
         )
-
-
 
 class AcceptConnectView(APIView):
     permission_classes = [IsAuthenticated]
@@ -460,18 +455,12 @@ class AcceptConnectView(APIView):
             connection.save()
             sender.connection.add(reciver)
             reciver.connection.add(sender)
-            print("connShop==============================>", connection)
-            print("status======================================>",connection.status)
-
             return Response(
                 {
                     "message": "Request accepted"
                 },
                 status=status.HTTP_202_ACCEPTED
             )
-
-            
-
 
         except Exception as e:
             print("Error====================", e)
