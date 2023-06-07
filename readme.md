@@ -96,7 +96,7 @@ required fields:
 
 # Shop
 
-<h3>Category Create, Update, Delete, Details:</h3>
+<h2>Category Create, Update, Delete, Details:</h2>
 
     post, get => http://127.0.0.1:8000/api/shop/shop-category/
 
@@ -109,7 +109,7 @@ reqyured field:
     }
 
 
-<h3>Shop Create, Update, Delete, Details:</h3>
+<h2>Shop Create, Update, Delete, Details:</h2>
 
     post, get => http://127.0.0.1:8000/api/shop/shop/
 
@@ -122,7 +122,7 @@ required field:
         "category_title": "Electronics"
     }
 
-<h3>Shop activation</h3>
+<h2>Shop activation</h2>
 
 <p>Just hit this below URL:</p>
 
@@ -137,13 +137,13 @@ requirde fields:
 <b>Note: _id = Shop Id</b>
 
 
-<h3>Get all shop</h3>
+<h2>Get all shop</h2>
 
     get => http://127.0.0.1:8000/api/shop/all/
 
 
 
-<h3>Shop to shop connection</h3>
+<h2>Shop to shop connection</h2>
 
 post, get => http://127.0.0.1:8000/api/shop/connection/
 
@@ -155,7 +155,7 @@ required fields:
 
 <b>Note: _id = Shop Id you want to sent connection</b>
 
-<h3>Accept shop connection</h3>
+<h2>Accept shop connection</h2>
 
 required fields:
 
@@ -168,7 +168,7 @@ required fields:
 
 # Product 
 
-<h3>Product add</h3>
+<h2>Product add</h2>
 
 get, post => http://127.0.0.1:8000/api/product/add/
 
