@@ -154,3 +154,13 @@ required fields:
     }
 
 <b>Note: _id = Shop Id you want to sent connection</b>
+
+<h3>Accept shop connection</h3>
+
+required fields:
+
+    {
+        "_id":"6b76a493-ed10-40a6-9eaf-aa8ad25b2bf3"
+    }
+
+<b>Note: _id = Shop Id you want to sent connection</b>
