@@ -163,7 +163,6 @@ class ShopCategoryDetails(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-
 # shop create ======================================================
 class ShopView(APIView):
     permission_classes = [IsAuthenticated]
@@ -320,7 +319,6 @@ class ShopDetailsView(APIView):
                 status=status.HTTP_204_NO_CONTENT
             )
 
-
 # activate shop ======================================================
 class ActivateShopView(APIView):
     permission_classes = [IsAuthenticated]
@@ -370,7 +368,7 @@ class AllShopView(APIView):
                 "data":serializer.data
             }, status=status.HTTP_200_OK
         )      
- 
+
 #shop connection
 class ShopConnectView(APIView):
     permission_classes = [IsAuthenticated]
