@@ -414,8 +414,8 @@ class ShopConnectView(APIView):
     
     def get(self, request):
         merchant = request.user
-        sendRequest = Connection.objects.filter(sender__merchant=merchant)
-        getRequest = Connection.objects.filter(reciver__merchant=merchant)
+        sendRequest = Connection.objects.filter(sender__merchant=merchant, status="pending")
+        getRequest = Connection.objects.filter(reciver__merchant=merchant, status="pending")
         
         print("sendRequest=================================>", sendRequest)
         print("getRequest=================================>", getRequest)
