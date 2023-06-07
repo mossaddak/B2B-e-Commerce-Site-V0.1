@@ -447,6 +447,14 @@ class AcceptConnectView(APIView):
             sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
             reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
             connection = Connection.objects.get(sender=sender, reciver=reciver)
+
+            if connection.status == "accepted":
+                return Response(
+                {
+                    "message": "Already you're connected with the shop"
+                },
+                status=status.HTTP_200_OK
+            )
             connection.status = "accepted"
             
             connection.save()
@@ -454,6 +462,13 @@ class AcceptConnectView(APIView):
             reciver.connection.add(sender)
             print("connShop==============================>", connection)
             print("status======================================>",connection.status)
+
+            return Response(
+                {
+                    "message": "Request accepted"
+                },
+                status=status.HTTP_202_ACCEPTED
+            )
 
             
 
