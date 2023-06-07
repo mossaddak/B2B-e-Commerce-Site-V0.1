@@ -70,19 +70,33 @@ class MyProductView(APIView):
             }, status=status.HTTP_202_ACCEPTED
         )
 
+class AllProductView(APIView):
+    def get(self, request):
+        user = request.user
+        data = Product.objects.all()
+        serializer = ProductSerializer(data, many=True)
+
+        return Response(
+            {
+                "data":serializer.data,
+                "message":"Data Fetch"
+            }, status=status.HTTP_202_ACCEPTED
+        )
 
 class ProductDetailsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    def getCategory(self, slug):
+    def getProduct(self, slug):
         product = Product.objects.get(slug=slug)
+        print("Product===================================================", product)
         return product
     
     def get(self,request, slug):
 
         try:
-            data = self.getCategory(slug)
+            data = self.getProduct(slug)
+            print("Product==============================>", data)
             serializer = ProductSerializer(data)
             return Response(
                 {

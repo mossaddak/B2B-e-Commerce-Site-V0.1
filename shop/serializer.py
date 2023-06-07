@@ -5,6 +5,7 @@ from .models import(
     Shop,
     Connection,
 )
+
 from rest_framework import serializers
 class ShopCategorySerializer(ModelSerializer):
 
@@ -32,7 +33,7 @@ class ShopSerializer(ModelSerializer):
             "title",
             "category",
             "is_active",
-            "connection"
+            "connection",
         )
 
 class ConnectionSerializer(ModelSerializer):
