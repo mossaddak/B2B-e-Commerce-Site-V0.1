@@ -164,3 +164,17 @@ required fields:
     }
 
 <b>Note: _id = Shop Id you want to sent connection</b>
+
+
+# Product 
+
+<h3>Product add</h3>
+
+get, post => http://127.0.0.1:8000/api/product/add/
+
+required fields:
+
+    title, desc, price, img
+
+Note: These are form data
+

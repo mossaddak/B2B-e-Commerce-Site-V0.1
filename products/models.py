@@ -16,12 +16,10 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250, unique=True, null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
     price = models.PositiveIntegerField(null=True, blank=False)
-    quantity = models.IntegerField(validators=[MinValueValidator(0)])
+    img = models.ImageField(null=True, blank=True, upload_to="files/img/product")
 
     def __str__(self):
-        f"{self.pk},{self.title}"
-
-
+        return f"{self.pk},{self.title}"
 
 
 @receiver(pre_save, sender=Product)
