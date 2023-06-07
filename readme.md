@@ -189,7 +189,7 @@ get => http://127.0.0.1:8000/api/product/products
 
 <h2>Product Details</h2>
 
-get => http://127.0.0.1:8000/api/product/products/<slug>
+get, put, delete => http://127.0.0.1:8000/api/product/products/<slug>
 
 
 

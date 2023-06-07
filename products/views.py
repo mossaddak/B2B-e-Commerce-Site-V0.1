@@ -25,7 +25,6 @@ class ProductView(APIView):
     authentication_classes = [JWTAuthentication]
     def post(self, request):
         user = request.user
-        
         try:
             shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
         except Shop.DoesNotExist:
@@ -71,9 +70,15 @@ class MyProductView(APIView):
         )
 
 class AllProductView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         user = request.user
-        data = Product.objects.all()
+        shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+        shopCategory = shop.category
+        print("Shop category==================================>", shopCategory)
+        data = Product.objects.filter(shop__category=shopCategory)
+        print("Category Product==============================", data)
         serializer = ProductSerializer(data, many=True)
 
         return Response(
@@ -112,4 +117,65 @@ class ProductDetailsView(APIView):
                     "message":"Something wrong"
                 },status=status.HTTP_400_BAD_REQUEST
             )
+
+    def put(self, request, slug):
+
+        shop = Shop.objects.get(Q(is_active=True) & Q(merchant=request.user))
+        if shop:
+            try:
+                product = self.getProduct(slug)
+                data = request.data
+                serializer = ProductSerializer(product, data=data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(
+                        {
+                            "data": serializer.data,
+                            "message": "Category Updated"
+                        },
+                        status=status.HTTP_202_ACCEPTED
+                    )
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+            except Exception as e:
+                return Response(
+                    {
+                        "data":{},
+                        "message":"Something wrong"
+                    },status=status.HTTP_400_BAD_REQUEST
+                )
+
+        else:
+            return Response(
+                {
+                    "data": {},
+                    "message": "You don't have permissions for this action"
+                },
+                status=status.HTTP_202_ACCEPTED
+            )
         
+    def delete(self, request, slug):
+        shop = Shop.objects.get(Q(is_active=True) & Q(merchant=request.user))
+
+        if shop:
+            self.getProduct(slug).delete()
+
+            return Response(
+                {
+                    "data": {},
+                    "message": "Product successfully deleted"
+                },
+                status=status.HTTP_200_OK
+            )
+        
+        else:
+            return Response(
+                {
+                    "data": {},
+                    "message": "You don't have permissions for this action"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
