@@ -191,6 +191,16 @@ get => http://127.0.0.1:8000/api/product/products
 
 get, put, delete => http://127.0.0.1:8000/api/product/products/<slug>
 
+# Shopping Cart
+
+add cart => http://127.0.0.1:8000/api/cart/add
+
+required fields:
+
+    {
+        "product_id":"2e059b50-9d9d-4ee9-9677-533f5360f772"
+    }
+
 
 
 

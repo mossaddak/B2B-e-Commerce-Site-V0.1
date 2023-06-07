@@ -18,7 +18,7 @@ class Product(models.Model):
     img = models.ImageField(null=True, blank=True, upload_to="files/img/product")
 
     def __str__(self):
-        return f"{self.pk},{self.title}"
+        return f"{self.pk}.{self.title}"
 
 
 @receiver(pre_save, sender=Product)
