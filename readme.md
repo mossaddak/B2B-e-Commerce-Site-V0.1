@@ -182,6 +182,16 @@ Note: These are form data
 
 post => http://127.0.0.1:8000/api/product/my-products
 
+<h2>All Product list</h2>
+
+get => http://127.0.0.1:8000/api/product/products
+
+
+<h2>Product Details</h2>
+
+get => http://127.0.0.1:8000/api/product/products/<slug>
+
+
 
 
 
