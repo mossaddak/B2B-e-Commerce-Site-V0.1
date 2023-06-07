@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator
 import uuid
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
