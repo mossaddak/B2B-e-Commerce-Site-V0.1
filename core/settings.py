@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     #shop
     'shop', #custom
+    'products', #custom
 ]
 
 MIDDLEWARE = [
