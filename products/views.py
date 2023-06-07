@@ -21,6 +21,8 @@ from .serializer import(
 
 # Create your views here.
 class ProductView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     def post(self, request):
         user = request.user
         
@@ -50,6 +52,11 @@ class ProductView(APIView):
             status=status.HTTP_201_CREATED
         )
     
+    
+class MyProductView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
     def get(self, request):
         user = request.user
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
@@ -62,4 +69,33 @@ class ProductView(APIView):
                 "message":"Data Fetch"
             }, status=status.HTTP_202_ACCEPTED
         )
+
+
+class ProductDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def getCategory(self, slug):
+        product = Product.objects.get(slug=slug)
+        return product
+    
+    def get(self,request, slug):
+
+        try:
+            data = self.getCategory(slug)
+            serializer = ProductSerializer(data)
+            return Response(
+                {
+                    "data":serializer.data,
+                    "message":"Data Fetch"
+                },status=status.HTTP_202_ACCEPTED
+            )
+        
+        except Exception as e:
+            return Response(
+                {
+                    "data":{},
+                    "message":"Something wrong"
+                },status=status.HTTP_400_BAD_REQUEST
+            )
         

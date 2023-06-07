@@ -170,11 +170,18 @@ required fields:
 
 <h2>Product add</h2>
 
-get, post => http://127.0.0.1:8000/api/product/add/
+post => http://127.0.0.1:8000/api/product/add
 
 required fields:
 
     title, desc, price, img
 
 Note: These are form data
+
+<h2>My Product list</h2>
+
+post => http://127.0.0.1:8000/api/product/my-products
+
+
+
 
