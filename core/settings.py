@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'drf_spectacular', #new
+
+
     'django_cleanup.apps.CleanupConfig', #new
     'corsheaders', #new
     'rest_framework', #new
@@ -184,6 +187,11 @@ SIMPLE_JWT = {
 
 
 REST_FRAMEWORK = {
+
+    #new
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
