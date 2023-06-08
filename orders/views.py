@@ -22,6 +22,9 @@ from .models import(
 from .models import(
     ProductStatus
 )
+from .serializer import(
+    OrderSerializer
+)
 
 
 
@@ -49,20 +52,13 @@ class OrderProductView(APIView):
             item = {
                 "product_name": product.product.title,
                 "product_id": product.product._id,
-                #"shop": product.shop.title,
                 "quantity": product.quantity,
-                "price": product.totalPrice
+                "total_price": product.totalPrice
             }
             total_price += (product.quantity * product.totalPrice)
             order_items.append(item)
-
-        
         total_quantity = cart_products.aggregate(total_quantity=Sum('quantity'))['total_quantity']
         total_price = cart_products.aggregate(total_price=Sum('totalPrice'))['total_price']
-        
-        print("order quantity===================================>", total_quantity)
-        print("total prince=====================================>",total_price)
-
 
         order_product = OrderProduct.objects.create(
             shop=shop,
@@ -70,12 +66,12 @@ class OrderProductView(APIView):
             total_qty=total_quantity,
             total_price=total_price
         )
-        #serializer = OrderSerializer
+        serializer = OrderSerializer(order_product)
 
 
         return Response(
             {
-                "data":"",
+                "data":serializer.data,
                 "message": "Order placed successfully."
             },
             status=status.HTTP_201_CREATED
