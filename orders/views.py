@@ -82,4 +82,24 @@ class OrderProductView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+        
+
+class MyOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        shop = Shop.objects.get(is_active=True, merchant=request.user)
+        data = OrderProduct.objects.filter(shop=shop)
+        serializer = OrderSerializer(data, many=True)
+
+
+        return Response(
+            {
+                "data":serializer.data,
+                "message": "You don't have any item in cart"
+            },
+            status=status.HTTP_200_OK
+        )
+
 
