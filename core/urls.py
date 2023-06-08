@@ -11,10 +11,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #user account
-    path('api/user-account/', include("user_account.urls")),
+    path('api/account/', include("user_account.urls")),
 
     #recovery account
-    path('api/recovery-account/', include("recovery_account.urls")),
+    path('api/account-recovery/', include("recovery_account.urls")),
 
     #shop
     path('api/shop/', include("shop.urls")),

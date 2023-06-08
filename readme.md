@@ -1,5 +1,5 @@
 # Sing Up
-post => http://127.0.0.1:8000/api/user-account/sing-up/
+post => http://127.0.0.1:8000/api/user-account/sing-up
 
 required field: 
 
@@ -15,13 +15,13 @@ required field:
 
     need to hit this url, user must need loged in. there is no need any field. after hit this user will get an otp through the email:
 
-    post => http://127.0.0.1:8000/api/user-account/account-verify-code/
+    post => http://127.0.0.1:8000/api/account/send-code
 
 -)Second:
 
     then you have to hit the below link with the otp you got through the email 
 
-    post => http://127.0.0.1:8000/api/user-account/verify/
+    post => http://127.0.0.1:8000/api/account/verification
 
     required field:
 
@@ -30,7 +30,7 @@ required field:
         }
 
 # Login
-post => http://127.0.0.1:8000/api/user-account/login/
+post => http://127.0.0.1:8000/api/user-account/login
 
 required fields:
 
@@ -41,14 +41,14 @@ required fields:
 
 # Profile Picture
 
-post, get, delete, patch => http://127.0.0.1:8000/api/user-account/profile-picture/
+post, get, delete, patch => http://127.0.0.1:8000/api/account/profile-picture/
 
 required field: img
 
 Note: Authentication Mandetory
 
 # Profile 
-post, patch => http://127.0.0.1:8000/api/user-account/profile/
+post, patch => http://127.0.0.1:8000/api/account/profile
 
 required fields:
 
@@ -67,7 +67,7 @@ Note: Here have to pass "username" field for patching
 
 <b>Send OTP to the mail:
 
-post => http://127.0.0.1:8000/api/recovery-account/reset-password/
+post => http://127.0.0.1:8000/api/account-recovery/otp-sent
 
 required fields:
 

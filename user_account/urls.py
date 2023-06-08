@@ -16,9 +16,9 @@ router.register(r"profile-picture", ProfilePictureView)
 
 urlpatterns = [
                
-    path('sing-up/', SingUp.as_view()),
-    path('login/', LoginView.as_view()),
-    path('profile/', ProfileView.as_view()),
-    path('verify/', VerifyOTPview.as_view()),
-    path('account-verify-code/', VerifiCationOtpSentView.as_view()),
+    path('sing-up', SingUp.as_view()),
+    path('login', LoginView.as_view()),
+    path('profile', ProfileView.as_view()),
+    path('verification', VerifyOTPview.as_view()),
+    path('send-code', VerifiCationOtpSentView.as_view()),
 ]+router.urls

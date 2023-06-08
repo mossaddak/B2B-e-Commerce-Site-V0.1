@@ -6,6 +6,6 @@ from .views import (
 )
 
 urlpatterns = [
-    path('reset-password/', PasswordReset.as_view(), name="reset-password"),
-    path('reset-password-send-token/',ResetPasswordSendTokenApi.as_view(), name="reset-password-send-token"),
+    path('otp-sent', PasswordReset.as_view(), name="otp-sent"),
+    path('set-new-password',ResetPasswordSendTokenApi.as_view(), name="set-new-password"),
 ]

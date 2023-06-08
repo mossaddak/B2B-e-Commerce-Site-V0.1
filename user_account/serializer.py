@@ -44,7 +44,10 @@ def auto_user(set_email):
 class ProfilePictureSerializer(ModelSerializer):
     class Meta:
         model = ProfilePicture
-        fields = "__all__"
+        fields = [
+            "uuid",
+            "image"
+        ]
 
 
 class UserSerializer(ModelSerializer):
@@ -57,7 +60,7 @@ class UserSerializer(ModelSerializer):
         is_subscribed = serializers.BooleanField(read_only=True)
         is_verified = serializers.BooleanField(read_only=True) 
         fields = [
-            'id',
+            'uuid',
             "username",
             "first_name",
             "last_name",

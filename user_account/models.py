@@ -2,19 +2,23 @@ from django.db import models
 from django.contrib.auth.models import User
 from .manager import CustomeUserManager
 from django.contrib.auth.models import AbstractUser
+import uuid
+
+
+
 
 # Create your models here.
 class User(AbstractUser):
     ACCOUNT_TYPE_CHOICES = [
         ('merchant', 'Merchant')
     ]
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     email = models.EmailField(max_length=50, unique=True, error_messages={"unique":"A user with that email already exists."})
     is_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=20, null=True, blank=True)
     password_reset_token = models.CharField(max_length=20, null=True, blank=True)
     is_subscribed = models.BooleanField(default=False)
-
-    account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPE_CHOICES, null=True, blank=True, default="merchant")
+    account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPE_CHOICES, default="merchant")
     USERNAME_FIELD='email'
     REQUIRED_FIELDS=['first_name', 'last_name', 'username']
     objects = CustomeUserManager()
@@ -26,10 +30,11 @@ class User(AbstractUser):
         verbose_name_plural = 'Merchant'
     
 class ProfilePicture(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="profile_picture")
-    img = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=False)
 
     def __str__(self):
-        return f"{self.pk}.{self.user}"
+        return f"{self.pk},{self.user}"
     
     

@@ -54,8 +54,8 @@ class ProfilePictureEdit(BasePermission):
 class SingUp(APIView):
 
     @extend_schema(
-    request=UserSerializer,
-    responses={201: UserSerializer},
+        request=UserSerializer,
+        responses={201: UserSerializer},
     )
     def post(self, request):
         try:
@@ -93,6 +93,13 @@ class SingUp(APIView):
                 )
         
 class VerifyOTPview(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=VeriFyAccountSerializer,
+        responses={202: VeriFyAccountSerializer},
+    )
     def post(self, request):
         try:
             data = request.data
@@ -133,13 +140,13 @@ class VerifyOTPview(APIView):
                             'message':"Your account is verified now.",
                             'refresh_token': str(refresh),
                             'access_token':str(refresh.access_token)
-                        },status = status.HTTP_201_CREATED
+                        },status = status.HTTP_202_ACCEPTED
                     )
                 else:
                     return Response(
                         {
                             'message':"Your already verified your account"
-                        },status = status.HTTP_201_CREATED
+                        },status = status.HTTP_200_OK
                     )
 
             
@@ -150,7 +157,7 @@ class LoginView(APIView):
 
     @extend_schema(
         request=LoginSerializer,
-        responses={201: LoginSerializer},
+        responses={200: LoginSerializer},
     )
     def post(self, request):
         try:
@@ -190,7 +197,7 @@ class ProfileView(APIView):
         response = Response(serializer.data)
         return response
 
-    def patch(self, request):
+    def put(self, request):
         try:
             userid = request.user.id
             user = User.objects.get(pk=userid)
@@ -236,9 +243,8 @@ class ProfileView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
             return response
+        
 #Profile picture
-
-
 class ProfilePictureView(ModelViewSet):
     serializer_class = ProfilePictureSerializer
     queryset = ProfilePicture.objects.all()
