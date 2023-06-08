@@ -147,6 +147,11 @@ class VerifyOTPview(APIView):
             print("Error=======================================", e)
 
 class LoginView(APIView):
+
+    @extend_schema(
+        request=LoginSerializer,
+        responses={201: LoginSerializer},
+    )
     def post(self, request):
         try:
             data = request.data
@@ -174,7 +179,10 @@ class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     
-
+    @extend_schema(
+        request=UserSerializer,
+        responses={200: UserSerializer},
+    )
     def get(self, request):
         users = User.objects.all()
         user = request.user
