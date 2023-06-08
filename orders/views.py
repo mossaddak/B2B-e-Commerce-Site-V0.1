@@ -26,8 +26,6 @@ from .serializer import(
     OrderSerializer
 )
 
-
-
 class OrderProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -66,9 +64,8 @@ class OrderProductView(APIView):
             total_qty=total_quantity,
             total_price=total_price
         )
+        cart_products.delete()
         serializer = OrderSerializer(order_product)
-
-
         return Response(
             {
                 "data":serializer.data,
