@@ -16,6 +16,9 @@ from .models import (
 from products.models import(
     Product
 )
+from .serilizer import (
+    ShoppingCartSerializer
+)
 
 class ShoppingCartView(APIView):
     permission_classes = [IsAuthenticated]
@@ -25,18 +28,16 @@ class ShoppingCartView(APIView):
         user = request.user
         product_id = request.data['product_id']
         product = Product.objects.get(_id=product_id)
-
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
-        
         is_product = ShoppingCart.objects.filter(shop=shop, product=product).first()
         print("Product ===============================>", product)
         print("Shop ===============================>", shop)
-        #print("is_product================================>", is_product)
 
         if is_product:
 
             if is_product.quantity < 5:
                 is_product.quantity += 1
+                is_product.totalPrice = product.price * is_product.quantity
                 is_product.save()
                 return Response(
                     {
@@ -65,3 +66,31 @@ class ShoppingCartView(APIView):
                 },
                 status=status.HTTP_201_CREATED
             )
+
+
+class MyCartView(APIView):
+
+    def get(self, request):
+        user = request.user
+
+        try:
+            shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+        except Exception as e:
+            return Response(
+                {
+                    "message": str(e)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+              
+        data = ShoppingCart.objects.filter(shop=shop)
+        serializer = ShoppingCartSerializer(data, many=True)
+
+        return Response(
+            {
+                "data":serializer.data
+            },status=status.HTTP_200_OK
+        )
+
+        

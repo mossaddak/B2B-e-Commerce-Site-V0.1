@@ -17,4 +17,4 @@ class ShoppingCart(models.Model):
     totalPrice = models.PositiveIntegerField(blank=False, null=True)
 
     def __str__(self):
-        return f"{self.pk},{self.product}"
+        return f"{self.pk}.{self.product}"

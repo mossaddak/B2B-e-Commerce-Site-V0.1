@@ -3,9 +3,12 @@ from rest_framework import serializers
 from .models import(
     ShoppingCart
 )
-
+from shop.serializer import (
+    ShopSerializer
+)
 
 class ShoppingCartSerializer(ModelSerializer):
+   shop = ShopSerializer(read_only=True)
 
    class Meta:
         product_id = serializers.CharField()
