@@ -208,7 +208,7 @@ required fields:
 
 order product:
 
-post => http://127.0.0.1:8000/api/orders/order-product
+post => http://127.0.0.1:8000/api/orders/order-products
 
 <p>Just hit the URL</p>
 

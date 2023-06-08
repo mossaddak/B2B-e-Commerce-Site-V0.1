@@ -58,19 +58,28 @@ class OrderProductView(APIView):
         total_quantity = cart_products.aggregate(total_quantity=Sum('quantity'))['total_quantity']
         total_price = cart_products.aggregate(total_price=Sum('totalPrice'))['total_price']
 
-        order_product = OrderProduct.objects.create(
-            shop=shop,
-            cart_items=str(order_items),
-            total_qty=total_quantity,
-            total_price=total_price
-        )
-        cart_products.delete()
-        serializer = OrderSerializer(order_product)
-        return Response(
-            {
-                "data":serializer.data,
-                "message": "Order placed successfully."
-            },
-            status=status.HTTP_201_CREATED
-        )
+        if not len(order_items)<1:
+            order_product = OrderProduct.objects.create(
+                shop=shop,
+                cart_items=str(order_items),
+                total_qty=total_quantity,
+                total_price=total_price
+            )
+            cart_products.delete()
+            serializer = OrderSerializer(order_product)
+            return Response(
+                {
+                    "data":serializer.data,
+                    "message": "Order placed successfully."
+                },
+                status=status.HTTP_201_CREATED
+            )
+        else:
+             return Response(
+                {
+                    "data":{},
+                    "message": "You don't have any item in cart"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
