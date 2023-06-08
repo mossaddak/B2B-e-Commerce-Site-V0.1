@@ -6,9 +6,13 @@ from .models import(
 from shop.serializer import (
     ShopSerializer
 )
+from products.serializer import(
+    ProductSerializer
+)
 
 class ShoppingCartSerializer(ModelSerializer):
    shop = ShopSerializer(read_only=True)
+   product = ProductSerializer(read_only=True)
 
    class Meta:
         product_id = serializers.CharField()
