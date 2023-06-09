@@ -19,10 +19,16 @@ from rest_framework.response import Response
 from rest_framework import status
 import random
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_spectacular.utils import extend_schema
 
 
 class PasswordReset(generics.GenericAPIView):
     serializer_class = EmailSerializer
+
+    @extend_schema(
+        request=EmailSerializer,
+        responses={201: EmailSerializer},
+    )
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
