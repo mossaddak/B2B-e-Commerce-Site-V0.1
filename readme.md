@@ -67,7 +67,7 @@ Note: Here have to pass "username" field for patching
 
 <b>Send OTP to the mail:
 
-post => http://127.0.0.1:8000/api/account-recovery/otp-sent
+post => http://127.0.0.1:8000/api/account/recovery-otp-sent
 
 required fields:
 
@@ -98,9 +98,9 @@ required fields:
 
 <h2>Category Create, Update, Delete, Details:</h2>
 
-    post, get => http://127.0.0.1:8000/api/shop/shop-category/
+    post, get => http://127.0.0.1:8000/api/shop/categories
 
-    details, put => http://127.0.0.1:8000/api/shop/shop-category/<slug>/
+    details, put => http://127.0.0.1:8000/api/shop/categories/{slug}
 
 reqyured field:
 

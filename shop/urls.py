@@ -15,8 +15,8 @@ from .views import(
 
 urlpatterns = [
     #category
-    path('shop-category/', ShopCategoryView.as_view()),
-    path('shop-category/<str:slug>/', ShopCategoryDetails.as_view()),
+    path('categories', ShopCategoryView.as_view()),
+    path('categories/<str:slug>', ShopCategoryDetails.as_view()),
 
     #shop
     path('shop/', ShopView.as_view()),

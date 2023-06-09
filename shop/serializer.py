@@ -12,7 +12,7 @@ class ShopCategorySerializer(ModelSerializer):
     class Meta:
         model = ShopCategory
         fields = (
-            "_id",
+            "uuid",
             "title",
             "slug"
         )
