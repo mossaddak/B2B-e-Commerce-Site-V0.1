@@ -31,8 +31,8 @@ class User(AbstractUser):
     
 class ProfilePicture(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="profile_picture")
-    image = models.ImageField(null=True, blank=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile_picture")
+    image = models.ImageField()
 
     def __str__(self):
         return f"{self.pk},{self.user}"

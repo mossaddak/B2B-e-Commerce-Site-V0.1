@@ -7,29 +7,30 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     #user account
-    path('api/account/', include("user_account.urls")),
+    path('account/', include("user_account.urls")),
 
     #recovery account
-    path('api/account/', include("recovery_account.urls")),
+    path('recovery/account/', include("recovery_account.urls")),
 
     #shop
-    path('api/shop/', include("shop.urls")),
+    path('', include("shop.urls")),
 
     #product
-    path('api/product/', include("products.urls")),
+    path('product/', include("products.urls")),
 
     #cart
-    path('api/cart/', include("cart.urls")),
+    path('cart/', include("cart.urls")),
 
     #cart
-    path('api/orders/', include("orders.urls")),
+    path('orders/', include("orders.urls")),
 
 
-
+    # # YOUR PATTERNS
     path('', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'), 
 

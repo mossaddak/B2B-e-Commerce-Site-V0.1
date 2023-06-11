@@ -5,6 +5,9 @@ from .models import(
     Shop,
     Connection,
 )
+from user_account.serializer import(
+    UserSerializer
+)
 
 from rest_framework import serializers
 class ShopCategorySerializer(ModelSerializer):
@@ -20,13 +23,14 @@ class ShopCategorySerializer(ModelSerializer):
 class ShopSerializer(ModelSerializer):
     #connection = ConnectionSerializer(many=True, read_only=True)
     category = ShopCategorySerializer(read_only=True)
+    merchant = UserSerializer(read_only=True)
     
     class Meta:
         category_title = serializers.CharField()
         is_active = serializers.BooleanField(read_only=True)
         model = Shop
         fields = (
-            "_id",
+            "uuid",
             "title",
             "slug",
             "merchant",
@@ -42,7 +46,7 @@ class ConnectionSerializer(ModelSerializer):
     class Meta:
         model = Connection
         fields = (
-            "_id",
+            "uuid",
             "sender",
             "reciver"
         )
@@ -50,5 +54,5 @@ class ConnectionSerializer(ModelSerializer):
 
 
 class BaseShopSerializer(serializers.Serializer):
-    _id = serializers.CharField()
+    uuid = serializers.CharField()
 

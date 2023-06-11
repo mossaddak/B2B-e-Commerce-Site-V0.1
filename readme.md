@@ -1,5 +1,5 @@
 # Sing Up
-post => http://127.0.0.1:8000/api/user-account/sing-up
+post => http://127.0.0.1:8000/user-account/sing-up
 
 required field: 
 
@@ -15,13 +15,13 @@ required field:
 
     need to hit this url, user must need loged in. there is no need any field. after hit this user will get an otp through the email:
 
-    post => http://127.0.0.1:8000/api/account/send-code
+    post => http://127.0.0.1:8000/account/send-code
 
 -)Second:
 
     then you have to hit the below link with the otp you got through the email 
 
-    post => http://127.0.0.1:8000/api/account/verification
+    post => http://127.0.0.1:8000/account/verification
 
     required field:
 
@@ -30,7 +30,7 @@ required field:
         }
 
 # Login
-post => http://127.0.0.1:8000/api/user-account/login
+post => http://127.0.0.1:8000/user-account/login
 
 required fields:
 
@@ -41,14 +41,14 @@ required fields:
 
 # Profile Picture
 
-post, get, delete, patch => http://127.0.0.1:8000/api/account/profile-picture/
+post, get, delete, patch => http://127.0.0.1:8000/account/profile-picture/
 
 required field: img
 
 Note: Authentication Mandetory
 
 # Profile 
-post, patch => http://127.0.0.1:8000/api/account/profile
+post, patch => http://127.0.0.1:8000/account/profile
 
 required fields:
 
@@ -67,7 +67,7 @@ Note: Here have to pass "username" field for patching
 
 <b>Send OTP to the mail:
 
-post => http://127.0.0.1:8000/api/account/recovery-otp-sent
+post => http://127.0.0.1:8000/recovery/account/otp-sent
 
 required fields:
 
@@ -76,6 +76,8 @@ required fields:
     }
 
 <b>Set New Password:</b>
+
+post => http://127.0.0.1:8000/recovery/account/set-new-password
 
 required fields:
 
@@ -98,9 +100,9 @@ required fields:
 
 <h2>Category Create, Update, Delete, Details:</h2>
 
-    post, get => http://127.0.0.1:8000/api/shop/categories
+    post, get => http://127.0.0.1:8000/categories
 
-    details, put => http://127.0.0.1:8000/api/shop/categories/{slug}
+    details, put => http://127.0.0.1:8000/categories/{slug}
 
 reqyured field:
 
@@ -111,9 +113,9 @@ reqyured field:
 
 <h2>Shop Create, Update, Delete, Details:</h2>
 
-    post, get => http://127.0.0.1:8000/api/shop/shop/
+    post, get => http://127.0.0.1:8000/me/shops
 
-    details, put => http://127.0.0.1:8000/api/shop/shop/<slug>/
+    details, put => http://127.0.0.1:8000/me/shops/<slug>
 
 required field:
 
@@ -126,7 +128,7 @@ required field:
 
 <p>Just hit this below URL:</p>
 
-    post => http://127.0.0.1:8000/api/shop/activate/
+    post => http://127.0.0.1:8000/me/shops/activate/
 
 requirde fields:
 
@@ -139,13 +141,13 @@ requirde fields:
 
 <h2>Get all shop</h2>
 
-    get => http://127.0.0.1:8000/api/shop/all/
+    get => http://127.0.0.1:8000/shop/all/
 
 
 
 <h2>Shop to shop connection</h2>
 
-post, get => http://127.0.0.1:8000/api/shop/connection/
+post, get => http://127.0.0.1:8000/shop/connection/
 
 required fields:
 
@@ -170,7 +172,7 @@ required fields:
 
 <h2>Product add</h2>
 
-post => http://127.0.0.1:8000/api/product/add
+post => http://127.0.0.1:8000/product/add
 
 required fields:
 
@@ -180,22 +182,22 @@ Note: These are form data
 
 <h2>My Product list</h2>
 
-post => http://127.0.0.1:8000/api/product/my-products
+post => http://127.0.0.1:8000/product/my-products
 
 <h2>All Product list</h2>
 
-get => http://127.0.0.1:8000/api/product/products
+get => http://127.0.0.1:8000/product/products
 
 
 <h2>Product Details</h2>
 
-get, put, delete => http://127.0.0.1:8000/api/product/products/<slug>
+get, put, delete => http://127.0.0.1:8000/product/products/<slug>
 
 # Shopping Cart
 
-add cart => http://127.0.0.1:8000/api/cart/add
+add cart => http://127.0.0.1:8000/cart/add
 
-get cart => http://127.0.0.1:8000/api/cart/my-carts
+get cart => http://127.0.0.1:8000/cart/my-carts
 
 required fields:
 
@@ -208,7 +210,7 @@ required fields:
 
 order product:
 
-post => http://127.0.0.1:8000/api/orders/order-products
+post => http://127.0.0.1:8000/orders/order-products
 
 <p>Just hit the URL</p>
 

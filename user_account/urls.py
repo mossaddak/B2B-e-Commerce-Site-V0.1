@@ -9,13 +9,13 @@ from .views import(
     VerifiCationOtpSentView
 )
 from rest_framework.routers import DefaultRouter
+
 router = DefaultRouter()
 
 
-router.register(r"profile-picture", ProfilePictureView) 
+router.register(r"profile-picture", ProfilePictureView)
 
 urlpatterns = [
-               
     path('sing-up', SingUp.as_view()),
     path('login', LoginView.as_view()),
     path('profile', ProfileView.as_view()),

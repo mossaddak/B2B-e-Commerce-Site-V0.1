@@ -40,6 +40,7 @@ from rest_framework import (
     permissions
 )
 from rest_framework import parsers
+from drf_spectacular.types import OpenApiTypes
 
 
 
@@ -56,6 +57,9 @@ class SingUp(APIView):
         request=UserSerializer,
         responses={201: UserSerializer},
     )
+
+
+    
     def post(self, request):
         try:
             data = request.data
@@ -245,11 +249,14 @@ class ProfileView(APIView):
         
 #Profile picture
 class ProfilePictureView(ModelViewSet):
+
     serializer_class = ProfilePictureSerializer
     queryset = ProfilePicture.objects.all()
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
     authentication_classes=[JWTAuthentication]
     permission_classes = [IsAuthenticated,ProfilePictureEdit]
+
+    
 
     def perform_create(self, serializer):
         user = self.request.user

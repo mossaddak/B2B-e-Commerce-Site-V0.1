@@ -8,13 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
-from rest_framework import status
-from shop.serializer import(
-    ShopSerializer
-)
-
-
-
+from rest_framework import status 
 
 
 def auto_user(set_email):
@@ -40,7 +34,6 @@ def auto_user(set_email):
 
     return username
 
-
 class ProfilePictureSerializer(ModelSerializer):
     class Meta:
         model = ProfilePicture
@@ -53,7 +46,7 @@ class ProfilePictureSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     profile_picture = ProfilePictureSerializer(many=True, read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
-    shops = ShopSerializer(many=True, read_only=True)
+    
     class Meta:
         model = User
         is_superuser = serializers.BooleanField(read_only=True)
@@ -69,8 +62,7 @@ class UserSerializer(ModelSerializer):
             "password",
             "is_superuser",
             "is_subscribed",
-            "is_verified",
-            "shops"
+            "is_verified"
         ]
 
         extra_kwargs = {
@@ -87,6 +79,9 @@ class UserSerializer(ModelSerializer):
 
     def get_username(self, obj):
         return obj.username
+    
+
+    
 
     def validate(self, data):
         request = self.context.get('request')

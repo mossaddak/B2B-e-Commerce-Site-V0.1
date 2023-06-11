@@ -19,11 +19,11 @@ urlpatterns = [
     path('categories/<str:slug>', ShopCategoryDetails.as_view()),
 
     #shop
-    path('shop/', ShopView.as_view()),
-    path('shop/<str:slug>/', ShopDetailsView.as_view()),
-    path('activate/', ActivateShopView.as_view()),
-    path('all/', AllShopView.as_view()),
-    path('connection/', ShopConnectView.as_view()),
-    path('connection/accept/', AcceptConnectView.as_view()),
+    path('me/shops', ShopView.as_view()),
+    path('me/shops/<str:slug>', ShopDetailsView.as_view()),
+    path('me/shops/activate/', ActivateShopView.as_view()),
+    path('shops', AllShopView.as_view()),
+    path('shops/connection', ShopConnectView.as_view()),
+    path('shop/connection/accepted', AcceptConnectView.as_view()),
 ]
  

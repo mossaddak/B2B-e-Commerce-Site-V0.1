@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from drf_spectacular.utils import extend_schema
 
 from .serializer import (
     ShopCategorySerializer,
@@ -24,6 +25,11 @@ from .models import(
 class ShopCategoryView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ShopCategorySerializer,
+        responses={201: ShopCategorySerializer},
+    )
     def post(self, request):
         if request.user.is_superuser:
             data = request.data
@@ -79,6 +85,11 @@ class ShopCategoryView(APIView):
 class ShopCategoryDetails(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ShopCategorySerializer,
+        responses={202: ShopCategorySerializer},
+    )
 
     def getCategory(self, slug):
         category = ShopCategory.objects.get(slug=slug)
@@ -167,6 +178,11 @@ class ShopCategoryDetails(APIView):
 class ShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ShopSerializer,
+        responses={201: ShopSerializer},
+    )
     def post(self, request):
         try:
             serializer = ShopSerializer(data=request.data)
@@ -215,6 +231,11 @@ class ShopView(APIView):
 class ShopDetailsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ShopSerializer,
+        responses={202: ShopSerializer},
+    )
 
     def getShop(self, slug):
         shop = Shop.objects.get(slug=slug)
@@ -326,9 +347,9 @@ class ActivateShopView(APIView):
 
     def post(self, request):
         try:
-            _id = request.data["_id"]
+            uuid = request.data["uuid"]
             user = request.user
-            shop = Shop.objects.get(_id=_id, merchant = user)
+            shop = Shop.objects.get(uuid=uuid, merchant = user)
 
             if shop.is_active == False:
 
@@ -376,10 +397,11 @@ class ShopConnectView(APIView):
 
     def post(self, request):
         try:
-            _id = request.data["_id"]
+            uuid = request.data["uuid"]
             user = request.user
             try:
-                reciver = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
+                reciver = Shop.objects.get(Q(uuid=uuid) & ~Q(merchant=user))
+                print("reciver==========================================",reciver)
                 sender = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
                 connection = Connection.objects.filter(sender=sender, reciver=reciver)
 
@@ -432,12 +454,10 @@ class AcceptConnectView(APIView):
 
     def post(self, request):
         try:
-            _id = request.data["_id"]
-            senderShop = Shop.objects.get(_id=_id)
+            uuid = request.data["uuid"]
+            senderShop = Shop.objects.get(uuid=uuid)
             user = request.user
-            
-
-            sender = Shop.objects.get(Q(_id=_id) & ~Q(merchant=user))
+            sender = Shop.objects.get(Q(uuid=uuid) & ~Q(merchant=user))
             reciver = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
             connection = Connection.objects.get(sender=sender, reciver=reciver)
 
