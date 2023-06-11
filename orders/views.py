@@ -49,7 +49,7 @@ class OrderProductView(APIView):
         for product in cart_products:
             item = {
                 "product_name": product.product.title,
-                "product_id": product.product._id,
+                "product_id": product.product.uuid,
                 "quantity": product.quantity,
                 "total_price": product.totalPrice
             }
@@ -97,7 +97,7 @@ class MyOrderView(APIView):
         return Response(
             {
                 "data":serializer.data,
-                "message": "You don't have any item in cart"
+                "message": "data fetch"
             },
             status=status.HTTP_200_OK
         )

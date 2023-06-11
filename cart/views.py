@@ -26,8 +26,8 @@ class ShoppingCartView(APIView):
 
     def post(self, request):
         user = request.user
-        product_id = request.data['product_id']
-        product = Product.objects.get(_id=product_id)
+        uuid = request.data['uuid']
+        product = Product.objects.get(uuid=uuid)
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
         is_product = ShoppingCart.objects.filter(shop=shop, product=product).first()
         print("Product ===============================>", product)

@@ -24,10 +24,10 @@ urlpatterns = [
     path('product', include("products.urls")),
 
     #cart
-    path('cart/', include("cart.urls")),
+    path('cart', include("cart.urls")),
 
     #cart
-    path('orders/', include("orders.urls")),
+    path('order', include("orders.urls")),
 
 
     # # YOUR PATTERNS

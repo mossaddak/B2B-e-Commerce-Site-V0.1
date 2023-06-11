@@ -13,7 +13,7 @@ class OrderSerializer(ModelSerializer):
     class Meta:
         model = OrderProduct
         fields = (
-            "_id",
+            "uuid",
             "shop",
             "cart_items",
             "status",

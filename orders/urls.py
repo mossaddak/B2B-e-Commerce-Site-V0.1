@@ -7,6 +7,6 @@ from .views import(
 
 
 urlpatterns = [
-    path("order-products", OrderProductView.as_view()),
-    path("my-orders", MyOrderView.as_view()),
+    path("s", OrderProductView.as_view()),
+    path("s/me", MyOrderView.as_view()),
 ]
