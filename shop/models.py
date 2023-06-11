@@ -19,10 +19,10 @@ class ShopCategory(models.Model):
 
 class Shop(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    merchant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shops", null=True)
+    merchant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shops")
     title = models.CharField(max_length=250, null=True)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    category = models.ForeignKey(ShopCategory, on_delete=models.CASCADE, related_name="category", null=True)
+    category = models.ForeignKey(ShopCategory, on_delete=models.CASCADE, related_name="category")
     is_active = models.BooleanField(default=False, null=True, blank=True) 
     connection = models.ManyToManyField("self", symmetrical=False, blank=True)
 
@@ -38,9 +38,9 @@ class Connection(models.Model):
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    sender = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
-    reciver = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True, related_name="reciver")
-    status = models.CharField(max_length=50, choices=CONEECTION_STATUS_CHOICES, null=True, blank=True, default="pending")
+    sender = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sender")
+    reciver = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="reciver")
+    status = models.CharField(max_length=50, choices=CONEECTION_STATUS_CHOICES, blank=True, default="pending")
 
 
     def __str__(self):

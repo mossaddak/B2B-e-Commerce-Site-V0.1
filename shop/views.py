@@ -402,7 +402,18 @@ class ShopConnectView(APIView):
             try:
                 reciver = Shop.objects.get(Q(uuid=uuid) & ~Q(merchant=user))
                 print("reciver==========================================",reciver)
+                
+                # is_not_active = Shop.objects.get(Q(is_active=False) & Q(merchant=user))
+                # if is_not_active:
+                #     return Response(
+                #         {
+                #             "message":"Please active your same category shop"
+                #         }
+                #     )
+
+
                 sender = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
+                print("Sender====================================>", sender)
                 connection = Connection.objects.filter(sender=sender, reciver=reciver)
 
                 if not connection:
