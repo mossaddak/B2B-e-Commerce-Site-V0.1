@@ -25,10 +25,16 @@ from .models import(
 from .serializer import(
     OrderSerializer
 )
+from drf_spectacular.utils import extend_schema
 
 class OrderProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=OrderSerializer,
+        responses={201: OrderSerializer},
+    )
     def post(self, request):
         try:
             shop = Shop.objects.get(is_active=True, merchant=request.user)
@@ -88,6 +94,10 @@ class MyOrderView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    @extend_schema(
+        request=OrderSerializer,
+        responses={200: OrderSerializer},
+    )
     def get(self, request):
         shop = Shop.objects.get(is_active=True, merchant=request.user)
         data = OrderProduct.objects.filter(shop=shop)

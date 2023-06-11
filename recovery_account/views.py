@@ -72,6 +72,11 @@ class PasswordReset(generics.GenericAPIView):
 class ResetPasswordSendTokenApi(generics.GenericAPIView):
 
     serializer_class = ResetPasswordSerializer
+
+    @extend_schema(
+        request=ResetPasswordSerializer,
+        responses={202: ResetPasswordSerializer},
+    )
     def post(self, request, *args, **kwargs):
         
         serializer = self.serializer_class(data=request.data)

@@ -345,6 +345,11 @@ class ActivateShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    @extend_schema(
+        request=ShopSerializer,
+        responses={200: ShopSerializer},
+    )
+
     def post(self, request):
         try:
             uuid = request.data["uuid"]
@@ -378,6 +383,11 @@ class AllShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    @extend_schema(
+        request=ShopSerializer,
+        responses={200: ShopSerializer},
+    )
+
     def get(self, request):
 
         data = Shop.objects.all()
@@ -395,6 +405,10 @@ class ShopConnectView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    @extend_schema(
+        request=ConnectionSerializer,
+        responses={200: ConnectionSerializer},
+    )
     def post(self, request):
         try:
             uuid = request.data["uuid"]
@@ -504,6 +518,11 @@ class AcceptConnectView(APIView):
 class ConnectedShopView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ConnectionSerializer,
+        responses={200: ConnectionSerializer},
+    )
 
     def get_connected_shops(self, userShop):
         connected_shops = userShop.connection.all()

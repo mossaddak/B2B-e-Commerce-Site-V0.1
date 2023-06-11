@@ -20,14 +20,30 @@ from .serilizer import (
     ShoppingCartSerializer
 )
 
+from drf_spectacular.utils import extend_schema
+
 class ShoppingCartView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+
+    @extend_schema(
+        request=ShoppingCartSerializer,
+        responses={201: ShoppingCartSerializer},
+    )
     def post(self, request):
         user = request.user
         uuid = request.data['uuid']
-        product = Product.objects.get(uuid=uuid)
+
+        try:
+            product = Product.objects.get(uuid=uuid)
+        except Exception as e:
+            return Response(
+                {
+                    "message":str(e),
+                }
+                
+            )
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
         is_product = ShoppingCart.objects.filter(shop=shop, product=product).first()
         print("Product ===============================>", product)
@@ -43,7 +59,7 @@ class ShoppingCartView(APIView):
                     {
                         "message": "Product cart updated"
                     },
-                    status=status.HTTP_200_OK
+                    status=status.HTTP_201_CREATED
                 )
             return Response(
                     {
@@ -69,6 +85,11 @@ class ShoppingCartView(APIView):
 
 
 class MyCartView(APIView):
+
+    @extend_schema(
+        request=ShoppingCartSerializer,
+        responses={200: ShoppingCartSerializer},
+    )
 
     def get(self, request):
         user = request.user

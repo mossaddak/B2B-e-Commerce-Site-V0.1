@@ -18,11 +18,18 @@ from shop.models import(
 from .serializer import(
     ProductSerializer
 )
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema
 
 # Create your views here.
 class ProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ProductSerializer,
+        responses={201: ProductSerializer},
+    )
     def post(self, request):
         user = request.user
         try:
@@ -70,6 +77,11 @@ class ProductView(APIView):
 class AllProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    @extend_schema(
+        request=ProductSerializer,
+        responses={202: ProductSerializer},
+    )
     def get(self, request):
         user = request.user
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
@@ -90,6 +102,10 @@ class ProductDetailsView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    @extend_schema(
+        request=ProductSerializer,
+        responses={202: ProductSerializer},
+    )
     def getProduct(self, slug):
         product = Product.objects.get(slug=slug)
         print("Product===================================================", product)

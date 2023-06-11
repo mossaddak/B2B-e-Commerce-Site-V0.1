@@ -21,8 +21,9 @@ urlpatterns = [
 
     #shop
     path('me/shops', ShopView.as_view()),
+    path('me/shops/activate', ActivateShopView.as_view()),
     path('me/shops/<str:slug>', ShopDetailsView.as_view()),
-    path('me/shops/activate/', ActivateShopView.as_view()),
+    
     path('me/shops/connected/', ConnectedShopView.as_view()),
     path('shops', AllShopView.as_view()),
     path('shops/connection', ShopConnectView.as_view()),
