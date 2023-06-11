@@ -501,3 +501,29 @@ class AcceptConnectView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
     
+class ConnectedShopView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_connected_shops(self, userShop):
+        connected_shops = userShop.connection.all()
+        return connected_shops
+
+    def get(self, request):
+        user = request.user
+        print("User=============================>", user)
+
+        userShops = Shop.objects.filter(merchant=user, is_active=True)
+
+        # Print the connected shops
+        connected_shops_data = []
+        for userShop in userShops:
+            connected_shops = self.get_connected_shops(userShop)
+            serializer = ShopSerializer(connected_shops, many=True)
+            connected_shops_data.extend(serializer.data)
+
+        return Response({
+            "data": connected_shops_data,
+            "message": "Connected shops retrieved successfully."
+        })
+

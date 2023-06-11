@@ -36,12 +36,13 @@ class ShopSerializer(ModelSerializer):
             "title",
             "category",
             "is_active",
-            "connection",
+            #"connection",
         )
 
 class ConnectionSerializer(ModelSerializer):
     sender = ShopSerializer()
     reciver = ShopSerializer()
+    #connection = ShopSerializer()
     class Meta:
         model = Connection
         fields = (
