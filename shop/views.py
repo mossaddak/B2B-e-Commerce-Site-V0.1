@@ -522,8 +522,10 @@ class ConnectedShopView(APIView):
             serializer = ShopSerializer(connected_shops, many=True)
             connected_shops_data.extend(serializer.data)
 
-        return Response({
-            "data": connected_shops_data,
-            "message": "Connected shops retrieved successfully."
-        })
+        return Response(
+            {
+                "data": connected_shops_data,
+                "message": "Connected shops retrieved successfully."
+            },status=status.HTTP_200_OK
+        )
 
