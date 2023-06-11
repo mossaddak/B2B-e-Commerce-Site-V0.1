@@ -39,6 +39,7 @@ class ProductView(APIView):
                 img=request.data['img']
             )
         except KeyError:
+            print("Error================================", KeyError)
             raise ValidationError("Invalid data. Required fields are missing.")
         
         serializer = ProductSerializer(products)
@@ -51,16 +52,11 @@ class ProductView(APIView):
             status=status.HTTP_201_CREATED
         )
     
-    
-class MyProductView(APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
-
     def get(self, request):
         user = request.user
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
         data = Product.objects.filter(shop=shop)
-        serializer = ProductSerializer(data, many=True)
+        serializer = ProductSerializer(data, many=True) 
 
         return Response(
             {
@@ -68,6 +64,8 @@ class MyProductView(APIView):
                 "message":"Data Fetch"
             }, status=status.HTTP_202_ACCEPTED
         )
+
+    
 
 class AllProductView(APIView):
     permission_classes = [IsAuthenticated]

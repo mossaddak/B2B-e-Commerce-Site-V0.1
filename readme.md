@@ -172,7 +172,7 @@ required fields:
 
 <h2>Product add</h2>
 
-post => http://127.0.0.1:8000/product/add
+post => http://127.0.0.1:8000/products
 
 required fields:
 

@@ -9,12 +9,12 @@ from shop.models import(
 
 # Create your models here.
 class Product(models.Model):
-    _id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=False, related_query_name="products")
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True, related_query_name="products")
     title = models.CharField(null=True, blank=False, max_length=250)
     slug = models.SlugField(max_length=250, unique=True, null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
-    price = models.PositiveIntegerField(null=True, blank=False)
+    price = models.PositiveIntegerField()
     img = models.ImageField(null=True, blank=True, upload_to="files/img/product")
 
     def __str__(self):
