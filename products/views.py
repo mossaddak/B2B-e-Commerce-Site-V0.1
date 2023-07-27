@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 
-
 from .models import(
     Product
 )
@@ -18,7 +17,6 @@ from shop.models import(
 from .serializer import(
     ProductSerializer
 )
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema
 
 # Create your views here.
@@ -46,7 +44,6 @@ class ProductView(APIView):
                 img=request.data['img']
             )
         except KeyError:
-            print("Error================================", KeyError)
             raise ValidationError("Invalid data. Required fields are missing.")
         
         serializer = ProductSerializer(products)
@@ -72,8 +69,6 @@ class ProductView(APIView):
             }, status=status.HTTP_202_ACCEPTED
         )
 
-    
-
 class AllProductView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -86,9 +81,7 @@ class AllProductView(APIView):
         user = request.user
         shop = Shop.objects.get(Q(is_active=True) & Q(merchant=user))
         shopCategory = shop.category
-        print("Shop category==================================>", shopCategory)
         data = Product.objects.filter(shop__category=shopCategory)
-        print("Category Product==============================", data)
         serializer = ProductSerializer(data, many=True)
 
         return Response(
@@ -108,14 +101,12 @@ class ProductDetailsView(APIView):
     )
     def getProduct(self, slug):
         product = Product.objects.get(slug=slug)
-        print("Product===================================================", product)
         return product
     
     def get(self,request, slug):
 
         try:
             data = self.getProduct(slug)
-            print("Product==============================>", data)
             serializer = ProductSerializer(data)
             return Response(
                 {
